@@ -1,0 +1,5 @@
+tet-java-client/bin/
+tet-java-client/out/*
+tet-java-client/.mylyn/
+tet-java-client/.metadata/
+.DS_Store
