@@ -20,7 +20,6 @@ public class MyMarinaraSketch extends PApplet {
   }
 
   public void draw() {
-    System.out.println("X=" + gaze.getX() + "  Y=" + gaze.getY());
     stroke(255);
     line(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     line(CANVAS_WIDTH, 0, 0, CANVAS_HEIGHT);
@@ -28,19 +27,21 @@ public class MyMarinaraSketch extends PApplet {
     rect(CANVAS_WIDTH/2, CANVAS_HEIGHT/2, CANVAS_WIDTH/4, CANVAS_HEIGHT/4);
 
     if (gaze != null) {
-      line(CANVAS_WIDTH/2, CANVAS_HEIGHT/2,(float)gaze.getX(),(float)gaze.getY());
-      double y1 = (double) CANVAS_HEIGHT/CANVAS_WIDTH * mouseX;
-      double y2 = (double) -CANVAS_HEIGHT/CANVAS_WIDTH * mouseX + CANVAS_HEIGHT;
+      double[] gazeX = gaze.getX();
+      double[] gazeY = gaze.getY();
+      line((float)gazeX[0], (float)gazeY[0],(float) gazeX[1],(float) gazeY[1]);
+      double y1 = (double) CANVAS_HEIGHT/CANVAS_WIDTH * gazeX[0];
+      double y2 = (double) -CANVAS_HEIGHT/CANVAS_WIDTH * gazeX[0] + CANVAS_HEIGHT;
       double midX = CANVAS_WIDTH/2;
       double midY = CANVAS_HEIGHT/2;
 
-      if (mouseY >= y1 && mouseY <= y2 && mouseX <= midX - CANVAS_WIDTH/8) {
+      if (gazeY[0] >= y1 && gazeY[0] <= y2 &&  gazeX[0] <= midX - CANVAS_WIDTH/8) {
         System.out.println("Q1");
-      } else if (mouseY <= y1 && mouseY <= y2 && mouseY <= midY - CANVAS_HEIGHT/8) {
+      } else if (gazeY[0]<= y1 && gazeY[0] <= y2 && gazeY[0] <= midY - CANVAS_HEIGHT/8) {
         System.out.println("Q2");
-      } else if (mouseY <= y1 && mouseY >= y2 && mouseX >= midX + CANVAS_WIDTH/8) {
+      } else if (gazeY[0] <= y1 && gazeY[0] >= y2 && gazeX[0] >= midX + CANVAS_WIDTH/8) {
         System.out.println("Q3");
-      } else if (mouseY >= y1 && mouseY >= y2 && mouseY >= midY + CANVAS_HEIGHT/8) {
+      } else if (gazeY[0] >= y1 && gazeY[0] >= y2 && gazeY[0] >= midY + CANVAS_HEIGHT/8) {
         System.out.println("Q4");
       } else {
         System.out.println("CENTER");

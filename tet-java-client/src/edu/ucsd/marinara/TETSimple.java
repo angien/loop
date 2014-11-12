@@ -31,30 +31,49 @@ public class TETSimple
         });
     }
 
-    public double getX() {
+    public double[] getX() {
         return  gazeAccessor.getGazeX();
     }
-    public double getY() {
+    public double[] getY() {
         return  gazeAccessor.getGazeY();
     }
 
     private static class GazeListener implements IGazeListener
     {
-        private double gazeX;
-        private double gazeY;
+        private double gazeX = -1;
+        private double gazeY = -1;
+        private double gazePrevX = -1;
+        private double gazePrevY = -1;
 
         @Override
         public void onGazeUpdate(GazeData gazeData)
         {
-            gazeX = gazeData.smoothedCoordinates.x;
-            gazeY = gazeData.smoothedCoordinates.y;
+            if ( gazeX == -1 && gazeY == -1 && gazePrevX == -1 && gazePrevY == -1) {
+                gazeX = gazeData.smoothedCoordinates.x;
+                gazeY = gazeData.smoothedCoordinates.y;
+                gazePrevX = gazeX;
+                gazePrevY = gazeY;
+            }
+
+            if (gazeData.smoothedCoordinates.x > 0 && gazeData.smoothedCoordinates.y > 0) {
+                gazePrevX = gazeX;
+                gazePrevY = gazeY;
+                gazeX = gazeData.smoothedCoordinates.x;
+                gazeY = gazeData.smoothedCoordinates.y;
+            }
         }
 
-        public double getGazeX(){
-            return gazeX;
+        public double[] getGazeX(){
+            double gazeArrayX[] = new double[2];
+            gazeArrayX[0] = gazePrevX;
+            gazeArrayX[1] = gazeX;
+            return gazeArrayX;
         }
-        public double getGazeY(){
-            return gazeY;
+        public double[] getGazeY(){
+            double gazeArrayY[] = new double[2];
+            gazeArrayY[0] = gazePrevY;
+            gazeArrayY[1] = gazeY;
+            return gazeArrayY;
         }
 
     }
