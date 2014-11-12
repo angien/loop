@@ -6,12 +6,16 @@ import com.theeyetribe.client.data.GazeData;
 
 public class TETSimple
 {
-    public static void main(String[] args)
+
+    private GazeListener gazeAccessor;
+
+    public TETSimple()
     {
         final GazeManager gm = GazeManager.getInstance();
         boolean success = gm.activate(GazeManager.ApiVersion.VERSION_1_0, GazeManager.ClientMode.PUSH);
 
         final GazeListener gazeListener = new GazeListener();
+        gazeAccessor = gazeListener;
         gm.addGazeListener(gazeListener);
 
         //TODO: Do awesome gaze control wizardry
@@ -27,18 +31,31 @@ public class TETSimple
         });
     }
 
+    public double getX() {
+        return  gazeAccessor.getGazeX();
+    }
+    public double getY() {
+        return  gazeAccessor.getGazeY();
+    }
+
     private static class GazeListener implements IGazeListener
     {
+        private double gazeX;
+        private double gazeY;
+
         @Override
         public void onGazeUpdate(GazeData gazeData)
         {
-            //System.out.println(gazeData.toString());
-
-            double gX = gazeData.smoothedCoordinates.x;
-            double gY = gazeData.smoothedCoordinates.y;
-
-
-            System.out.println("data is : "+ gX+" , "+gY);
+            gazeX = gazeData.smoothedCoordinates.x;
+            gazeY = gazeData.smoothedCoordinates.y;
         }
+
+        public double getGazeX(){
+            return gazeX;
+        }
+        public double getGazeY(){
+            return gazeY;
+        }
+
     }
 }

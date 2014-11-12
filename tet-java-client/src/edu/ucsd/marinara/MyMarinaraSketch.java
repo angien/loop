@@ -4,8 +4,9 @@ import processing.core.*;
 
 public class MyMarinaraSketch extends PApplet {
 
-  private static int CANVAS_WIDTH = 2160/2;
-  private static int CANVAS_HEIGHT = 1440/2;
+  private static int CANVAS_WIDTH = 1920;
+  private static int CANVAS_HEIGHT = 1080;
+  TETSimple gaze = new TETSimple();
 
   public static void main(String args[]) {
     PApplet.main(new String[] { "edu.ucsd.marinara.MyMarinaraSketch" });
@@ -14,17 +15,20 @@ public class MyMarinaraSketch extends PApplet {
   public void setup() {
     size(CANVAS_WIDTH, CANVAS_HEIGHT);
     background(0);
+
+
   }
 
   public void draw() {
+    System.out.println("X=" + gaze.getX() + "  Y=" + gaze.getY());
     stroke(255);
     line(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     line(CANVAS_WIDTH, 0, 0, CANVAS_HEIGHT);
     rectMode(CENTER);
     rect(CANVAS_WIDTH/2, CANVAS_HEIGHT/2, CANVAS_WIDTH/4, CANVAS_HEIGHT/4);
 
-    if (mousePressed) {
-      line(mouseX,mouseY,pmouseX,pmouseY);
+    if (gaze != null) {
+      line(CANVAS_WIDTH/2, CANVAS_HEIGHT/2,(float)gaze.getX(),(float)gaze.getY());
       double y1 = (double) CANVAS_HEIGHT/CANVAS_WIDTH * mouseX;
       double y2 = (double) -CANVAS_HEIGHT/CANVAS_WIDTH * mouseX + CANVAS_HEIGHT;
       double midX = CANVAS_WIDTH/2;
