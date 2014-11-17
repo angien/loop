@@ -1,6 +1,9 @@
 package edu.ucsd.bolognese.src;
 
+import edu.ucsd.marinara.MyMarinaraSketch;
 import processing.core.*;
+
+import java.io.IOException;
 
 /**
  * Created by karenlo on 11/13/14.
@@ -115,7 +118,13 @@ public class FaceRev extends PApplet {
      */
     public void mousePressed() {
         if(writeOver){
-            text("Clicked on write button!", 500, 500);
+            try {
+                MyMarinaraSketch sketch = new MyMarinaraSketch();
+                String[] args = {};
+                sketch.main(args);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -160,6 +169,6 @@ public class FaceRev extends PApplet {
     }
 
     static public void main(String args[]) {
-        PApplet.main(new String[] { "FaceRev" });
+        PApplet.main(new String[] { "edu.ucsd.bolognese.src.FaceRev" });
     }
 }
