@@ -3,7 +3,6 @@ package edu.ucsd.bolognese.src;
 import edu.ucsd.marinara.MyMarinaraSketch;
 import processing.core.*;
 
-import java.io.IOException;
 
 /**
  * Created by karenlo on 11/13/14.
@@ -27,7 +26,6 @@ public class FaceRev extends PApplet {
     static final int DELETEX      = 1080;
     static final int BACKY        = 460;
     int writeColor, addColor, deleteColor, backColor, highlight;
-    boolean writeOver = false, addOver = false, deleteOver = false, backOver = false;
     PImage profPic, writeImg, addImg, deleteImg, backImg;
     PFont f;
 
@@ -48,29 +46,28 @@ public class FaceRev extends PApplet {
     }
 
     public void draw() {
-        update(mouseX, mouseY);
 
-        if(writeOver) fill(highlight);
-        else fill(writeColor);
+        writeColor = color(11, 72, 107);
+        addColor = color(59, 134, 134);
+        deleteColor = color(121, 189, 154);
+        backColor = color(115, 99, 87);
 
+        if (overWrite(WRITEX, ZERO, RECTWIDTH, RECTHEIGHT)) writeColor = highlight;
+        if (overAdd(ADDX, ZERO, RECTWIDTH, RECTHEIGHT)) addColor = highlight;
+        if (overDelete(DELETEX, ZERO, RECTWIDTH, RECTHEIGHT)) deleteColor = highlight;
+        if (overBack(ZERO, BACKY, BACKWIDTH, BACKHEIGHT)) backColor = highlight;
+
+        // buttons
+        fill(writeColor);
         noStroke();
         rect(WRITEX, ZERO, RECTWIDTH, RECTHEIGHT);
-
-        if(addOver) fill(highlight);
-        else fill(addColor);
-
+        fill(addColor);
         noStroke();
         rect(ADDX, ZERO, RECTWIDTH, RECTHEIGHT);
-
-        if(deleteOver) fill(highlight);
-        else fill(deleteColor);
-
+        fill(deleteColor);
         noStroke();
         rect(DELETEX, ZERO, RECTWIDTH, RECTHEIGHT);
-
-        if(backOver) fill(highlight);
-        else fill(backColor);
-
+        fill(backColor);
         noStroke();
         rect(ZERO, BACKY, BACKWIDTH, BACKHEIGHT);
 
@@ -87,37 +84,11 @@ public class FaceRev extends PApplet {
         text("Karen Lo", 250, 510);
     }
 
-    public void update(int x, int y){
-        if( overWrite(WRITEX, ZERO, RECTWIDTH, RECTHEIGHT) ) {
-            writeOver = true;
-            addOver = false;
-            deleteOver = false;
-            backOver = false;
-        } else if( overAdd(ADDX, ZERO, RECTWIDTH, RECTHEIGHT) ) {
-            writeOver = false;
-            addOver = true;
-            deleteOver = false;
-            backOver = false;
-        } else if( overDelete(DELETEX, ZERO, RECTWIDTH, RECTHEIGHT) ) {
-            writeOver = false;
-            addOver = false;
-            deleteOver = true;
-            backOver = false;
-        } else if( overBack(ZERO, BACKY, BACKWIDTH, BACKHEIGHT) ) {
-            writeOver = false;
-            addOver = false;
-            deleteOver = false;
-            backOver = true;
-        } else {
-            writeOver = addOver =  deleteOver = backOver = false;
-        }
-    }
-
     /**
      * Actions when mouse is clicked
      */
     public void mousePressed() {
-        if(writeOver){
+        if(overWrite(WRITEX, ZERO, RECTWIDTH, RECTHEIGHT)){
             try {
                 MyMarinaraSketch sketch = new MyMarinaraSketch();
                 String[] args = {};
@@ -132,40 +103,32 @@ public class FaceRev extends PApplet {
      * Set to true if hovering over write button
      */
     public boolean overWrite(int x, int y, int width, int height) {
-        if(mouseX >= x && mouseX <= x+width &&
-           mouseY >= y && mouseY <= y+height)
-            return true;
-        else return false;
+        return mouseX >= x && mouseX <= x + width &&
+                mouseY >= y && mouseY <= y + height;
     }
 
     /**
      * Set to true if hovering over add button
      */
     public boolean overAdd(int x, int y, int width, int height) {
-        if(mouseX >= x && mouseX <= x+width &&
-                mouseY >= y && mouseY <= y+height)
-            return true;
-        else return false;
+        return mouseX >= x && mouseX <= x + width &&
+                mouseY >= y && mouseY <= y + height;
     }
 
     /**
      * Set to true if hovering over delete button
      */
     public boolean overDelete(int x, int y, int width, int height) {
-        if(mouseX >= x && mouseX <= x+width &&
-                mouseY >= y && mouseY <= y+height)
-            return true;
-        else return false;
+        return mouseX >= x && mouseX <= x + width &&
+                mouseY >= y && mouseY <= y + height;
     }
 
     /**
      * Set to true if hovering over back button
      */
     public boolean overBack(int x, int y, int width, int height) {
-        if(mouseX >= x && mouseX <= x+width &&
-                mouseY >= y && mouseY <= y+height)
-            return true;
-        else return false;
+        return mouseX >= x && mouseX <= x + width &&
+                mouseY >= y && mouseY <= y + height;
     }
 
     static public void main(String args[]) {
