@@ -4,4 +4,5 @@ tet-java-client/.mylyn/
 tet-java-client/.metadata/
 tet-java-client/tet-java-client.iml
 tet-java-client/.idea/workspace.xml
+tet-java-client/.idea/codeStyleSettings.xml
 .DS_Store
