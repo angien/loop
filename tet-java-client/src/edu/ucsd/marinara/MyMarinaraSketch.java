@@ -21,7 +21,7 @@ public class MyMarinaraSketch extends PApplet {
     private static int prev_q = 0;
     private static int prev_direction = 0;
     private static int branch_count = 0;
-    private static int[] crossed_q = new int[5];
+    private static int[] crossed_q = new int[6];
     private static boolean didStartFromMid = false;
     private static boolean isValidFlow = false;
     private static int flow_counter = 0;
@@ -58,7 +58,7 @@ public class MyMarinaraSketch extends PApplet {
         isValidFlow = false;
         flow_counter = 0;
         pressed_start_q = -1;
-        crossed_q = new int[5];
+        crossed_q = new int[6];
     }
 
     public char getQChar(int start_q, int cross_direction, int cross_count) {
@@ -195,7 +195,7 @@ public class MyMarinaraSketch extends PApplet {
                         System.out.println("started at quadrant: " + Integer.toString(new_q));
 
                     }
-                    else if(new_q != prev_q) // did change quadrant, only crossed one
+                    if (new_q != prev_q) // did change quadrant, only crossed one
                     {
                         System.out.println("crossed branch from: " + Integer.toString(prev_q) + " to " + Integer.toString(new_q));
                         prev_q = new_q;
