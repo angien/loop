@@ -5,21 +5,25 @@ import processing.core.*;
 import java.awt.*;
 
 public class MyMarinaraSketch extends PApplet {
+
+    // Get current screen size, take out later
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private double width = screenSize.getWidth();
     private double height = screenSize.getHeight();
 
     private int CANVAS_WIDTH = (int) (width / 2); //2160/2;
     private int CANVAS_HEIGHT = (int) (height / 2); //1440/2;
-    private float CANVAS_X1 = CANVAS_WIDTH / 2;
-    private float CANVAS_Y1 = CANVAS_HEIGHT / 2;
-    private float CANVAS_X2 = CANVAS_WIDTH / 4;
-    private float CANVAS_Y2 = CANVAS_HEIGHT / 4;
     private float CANVAS_MID_X = CANVAS_WIDTH / 2;
     private float CANVAS_MID_Y = CANVAS_HEIGHT / 2;
 
+    // Inner rectangle variables
+    private float RECT_X1 = CANVAS_WIDTH / 2;
+    private float RECT_Y1 = CANVAS_HEIGHT / 2;
+    private float RECT_X2 = CANVAS_WIDTH / 4;
+    private float RECT_Y2 = CANVAS_HEIGHT / 4;
+
     private static int prev_q = 0;
-    private static int prev_direction = 0;
+
     private static int branch_count = 0;
     private static int[] crossed_q = new int[6];
     private static boolean didStartFromMid = false;
@@ -38,67 +42,18 @@ public class MyMarinaraSketch extends PApplet {
     private static final char[] q4_pos_char = new char[]{'e', 'l', 'k', '#'}; // accented e
     private static final char[] q4_neg_char = new char[]{'o', 'u', 'v', 'w'};
 
-
-    // check if current mouse position is inside the box
-    // start point = x1, y2 ... end point = x2, y2
-    public boolean isInBox(float box_x1, float box_y1, float box_x2, float box_y2,
-                           int mouse_x, int mouse_y) {
-        if (mouse_x > box_x1 && mouse_x < box_x2 &&
-                mouse_y > box_y1 && mouse_y < box_y2) {
-            return true;
-        }
-        return false;
+    public static void main(String args[]) {
+        PApplet.main(new String[]{"edu.ucsd.marinara.MyMarinaraSketch"});
     }
 
-    public static void resetAllValues() {
-        prev_q = 0;
-        prev_direction = 0;
-        branch_count = 0;
-        didStartFromMid = false;
-        isValidFlow = false;
-        flow_counter = 0;
-        pressed_start_q = -1;
-        crossed_q = new int[6];
+    // Processing function for setting up UI
+    public void setup() {
+        size(CANVAS_WIDTH, CANVAS_HEIGHT);
+        background(0);
+        drawDefaultWindow();
     }
 
-    public char getQChar(int start_q, int cross_direction, int cross_count) {
-        char result = '^';
-        System.out.print("getting char: " + Integer.toString(start_q) + " " +
-            Integer.toString(cross_direction) + " " +
-            Integer.toString(cross_count));
-        switch (start_q * cross_direction) {
-            case 1:
-                result = q1_pos_char[cross_count - 1];
-                break;
-            case -1:
-                result = q1_neg_char[cross_count - 1];
-                break;
-            case 2:
-                result = q2_pos_char[cross_count - 1];
-                break;
-            case -2:
-                result = q2_neg_char[cross_count - 1];
-                break;
-            case 3:
-                result = q3_pos_char[cross_count - 1];
-                break;
-            case -3:
-                result = q3_neg_char[cross_count - 1];
-                break;
-            case 4:
-                result = q4_pos_char[cross_count - 1];
-                break;
-            case -4:
-                result = q4_neg_char[cross_count - 1];
-                break;
-            default:
-                break;
-        }
-
-
-        return result;
-    }
-
+    // Method for drawing UI
     public void drawDefaultWindow() {
         stroke(255);
 
@@ -107,18 +62,73 @@ public class MyMarinaraSketch extends PApplet {
         line(CANVAS_WIDTH, 0, 0, CANVAS_HEIGHT);
 
         rectMode(CENTER);
-        rect(CANVAS_X1, CANVAS_Y1, CANVAS_X2, CANVAS_Y2);
+        rect(RECT_X1, RECT_Y1, RECT_X2, RECT_Y2);
+
+        int textSize = 32;
+        textSize(textSize);
+        text(new String(q1_pos_char), 10+textSize, 10+textSize);
+        text(new String(q1_neg_char), 100, 100);
+        text(new String(q2_pos_char), 100, 100);
+        text(new String(q2_neg_char), 100, 100);
+        text(new String(q3_pos_char), 100, 100);
+        text(new String(q3_neg_char), 100, 100);
+        text(new String(q4_pos_char), 100, 100);
+        text(new String(q4_neg_char), 100, 100);
     }
 
-    public static void main(String args[]) {
-        PApplet.main(new String[]{"edu.ucsd.marinara.MyMarinaraSketch"});
+    public static void resetAllValues() {
+        prev_q = 0;
+        branch_count = 0;
+        didStartFromMid = false;
+        isValidFlow = false;
+        flow_counter = 0;
+        pressed_start_q = -1;
+        crossed_q = new int[6];
     }
 
-    public void setup() {
-        System.out.println("set up counter");
-        size(CANVAS_WIDTH, CANVAS_HEIGHT);
-        background(0);
+    // Based off params, gets the char
+    // start_q: starting quadrant number
+    // loop_direction: direction of the loop
+    // q_count: number of quadrants entered
+    public char getQChar(int start_q, int loop_direction, int q_count) {
+        // default return value
+        char result = ' ';
+        System.out.println("Char: " + Integer.toString(start_q) + " " +
+                Integer.toString(loop_direction) + " " +
+                Integer.toString(q_count));
+        switch (start_q * loop_direction) {
+            case 1:
+                result = q1_pos_char[q_count - 1];
+                break;
+            case -1:
+                result = q1_neg_char[q_count - 1];
+                break;
+            case 2:
+                result = q2_pos_char[q_count - 1];
+                break;
+            case -2:
+                result = q2_neg_char[q_count - 1];
+                break;
+            case 3:
+                result = q3_pos_char[q_count - 1];
+                break;
+            case -3:
+                result = q3_neg_char[q_count - 1];
+                break;
+            case 4:
+                result = q4_pos_char[q_count - 1];
+                break;
+            case -4:
+                result = q4_neg_char[q_count - 1];
+                break;
+            default:
+                break;
+        }
+
+        return result;
     }
+
+
 
 
     // calculate which quadrant the mouse is in
@@ -144,37 +154,9 @@ public class MyMarinaraSketch extends PApplet {
         }
     }
 
-    // sorry...too lazy to refactor this...
-    // 0 is center, 1 is right cross, -1 is left cross
-    public int getCurrDirection(int prev_q, int curr_q) // refactor this...only works cause Java is PBV
-    {
-        int result = curr_q - prev_q;
-        if ((prev_q == 4 && curr_q == 1) || (prev_q == 1 && curr_q == 4)) // corner case
-        {
-            if (prev_q < curr_q) // 4 going to 1
-            {
-                result = 1;
-            } else // 1 going to 4
-            {
-                result = -1;
-            }
-        }
-
-        else {
-            if (prev_q < curr_q) // right cross
-            {
-                result = 1;
-            } else // left cross
-            {
-                result = -1;
-            }
-        }
-
-        return result;
-    }
 
     public void draw() {
-        drawDefaultWindow();
+        //drawDefaultWindow();
 
         if (mousePressed) {
                 // if mouse enters/is in quadrant
@@ -183,12 +165,17 @@ public class MyMarinaraSketch extends PApplet {
                  // wen moving quadrants, mouse changes before pmouse
                 // mouse is start, pmouse is end
                 int new_q = getCurrQ(pmouseX, pmouseY);
-                int new_direction = getCurrDirection(prev_q, new_q);
 
                 if (branch_count < 6)
                 {
+                    // started
                     if(branch_count == 0)
                     {
+                        if (new_q == 0) {
+                            stroke(0,255,0);
+                            rectMode(CENTER);
+                            rect(RECT_X1, RECT_Y1, RECT_X2, RECT_Y2);
+                        }
                         crossed_q[branch_count] = new_q;
                         branch_count++;
                         prev_q = new_q;
@@ -199,7 +186,6 @@ public class MyMarinaraSketch extends PApplet {
                     {
                         System.out.println("crossed branch from: " + Integer.toString(prev_q) + " to " + Integer.toString(new_q));
                         prev_q = new_q;
-                        prev_direction = new_direction;
                         crossed_q[branch_count] = new_q;
                         branch_count++;
                     }
@@ -221,7 +207,7 @@ public class MyMarinaraSketch extends PApplet {
 
                 else
                 {
-                    System.out.println("somethign went wrong ");
+                    System.out.println("Something went wrong ");
                 }
             }
 
