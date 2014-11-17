@@ -195,7 +195,7 @@ public class MyMarinaraSketch extends PApplet {
                         System.out.println("started at quadrant: " + Integer.toString(new_q));
 
                     }
-                    if (new_q != prev_q) // did change quadrant, only crossed one
+                    else if(new_q != prev_q) // did change quadrant, only crossed one
                     {
                         System.out.println("crossed branch from: " + Integer.toString(prev_q) + " to " + Integer.toString(new_q));
                         prev_q = new_q;
@@ -207,8 +207,7 @@ public class MyMarinaraSketch extends PApplet {
         } // end if(mousePressed
         else // mouse released
         {
-
-            if (branch_count > 2 && branch_count < 7) // make sure it did exit the center before
+            if(branch_count > 2 && branch_count < 7 && getCurrQ(mouseX, mouseY) == 0) // make sure it did exit the center before
             {
                 System.out.println("mouse released, the starting point is: " + Integer.toString(crossed_q[0]));
                 System.out.println("the size is: " + Integer.toString(branch_count));
