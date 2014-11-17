@@ -29,7 +29,7 @@
       <file leaf-file-name="TETSimple.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/edu/ucsd/marinara/TETSimple.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="212" max-vertical-offset="660">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="660">
               <caret line="6" column="22" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -41,8 +41,8 @@
       <file leaf-file-name="MyMarinaraSketch.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/edu/ucsd/marinara/MyMarinaraSketch.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.72627735" vertical-offset="2857" max-vertical-offset="3645">
-              <caret line="217" column="62" selection-start-line="217" selection-start-column="62" selection-end-line="217" selection-end-column="62" />
+            <state vertical-scroll-proportion="0.49270073" vertical-offset="0" max-vertical-offset="3645">
+              <caret line="18" column="50" selection-start-line="18" selection-start-column="50" selection-end-line="18" selection-end-column="50" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#4243#4244#0" expanded="true" />
@@ -548,12 +548,12 @@
       <workItem from="1414879981631" duration="2958000" />
       <workItem from="1415654690502" duration="4132000" />
       <workItem from="1416133946991" duration="842000" />
-      <workItem from="1416140570117" duration="31546000" />
+      <workItem from="1416140570117" duration="31833000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="39478000" />
+    <option name="totallyTimeSpent" value="39765000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="4" y="23" width="1276" height="777" extended-state="0" />
@@ -727,8 +727,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/edu/ucsd/marinara/MyMarinaraSketch.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.72627735" vertical-offset="2857" max-vertical-offset="3645">
-          <caret line="217" column="62" selection-start-line="217" selection-start-column="62" selection-end-line="217" selection-end-column="62" />
+        <state vertical-scroll-proportion="0.49270073" vertical-offset="0" max-vertical-offset="3645">
+          <caret line="18" column="50" selection-start-line="18" selection-start-column="50" selection-end-line="18" selection-end-column="50" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#4243#4244#0" expanded="true" />
