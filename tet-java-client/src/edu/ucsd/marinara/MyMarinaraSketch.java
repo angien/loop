@@ -55,25 +55,39 @@ public class MyMarinaraSketch extends PApplet {
 
     // Method for drawing UI
     public void drawDefaultWindow() {
-        stroke(255);
+      stroke(255);
 
-        // line (start x, start y, end x, end y)
-        line(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-        line(CANVAS_WIDTH, 0, 0, CANVAS_HEIGHT);
+      // line (start x, start y, end x, end y)
+      line(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+      line(CANVAS_WIDTH, 0, 0, CANVAS_HEIGHT);
 
-        rectMode(CENTER);
-        rect(RECT_X1, RECT_Y1, RECT_X2, RECT_Y2);
+      rectMode(CENTER);
+      rect(RECT_X1, RECT_Y1, RECT_X2, RECT_Y2);
 
-        int textSize = 32;
-        textSize(textSize);
-        text(new String(q1_pos_char), 10+textSize, 10+textSize);
-        text(new String(q1_neg_char), 100, 100);
-        text(new String(q2_pos_char), 100, 100);
-        text(new String(q2_neg_char), 100, 100);
-        text(new String(q3_pos_char), 100, 100);
-        text(new String(q3_neg_char), 100, 100);
-        text(new String(q4_pos_char), 100, 100);
-        text(new String(q4_neg_char), 100, 100);
+      int textSize = 32;
+      int leftXPos = CANVAS_WIDTH / 10;
+      int rightXPos = (int) (CANVAS_WIDTH * .8);
+      textSize(textSize);
+      textAlign(leftXPos);
+      text(new String(q1_pos_char), leftXPos, getQuadrantTextYPosition(leftXPos, true) + 50);
+      text(new String(q1_neg_char), leftXPos, getQuadrantTextYPosition(leftXPos, false) - 35);
+      text(new String(q2_neg_char), leftXPos, getQuadrantTextYPosition(leftXPos, true));
+      text(new String(q4_pos_char), leftXPos, getQuadrantTextYPosition(leftXPos, false) + 30);
+
+      textAlign(rightXPos);
+      text(new String(q2_pos_char), rightXPos, getQuadrantTextYPosition(rightXPos, false) - 55);
+      text(new String(q3_pos_char), rightXPos, getQuadrantTextYPosition(rightXPos, true));
+      text(new String(q3_neg_char), rightXPos, getQuadrantTextYPosition(rightXPos, false) + 30);
+      text(new String(q4_neg_char), rightXPos, getQuadrantTextYPosition(rightXPos, true) + 75);
+    }
+
+
+  private int getQuadrantTextYPosition(int xPosition, boolean posChar) {
+      float lineSlope = (float) CANVAS_HEIGHT / CANVAS_WIDTH;
+      if(posChar) {
+        return (int) (lineSlope * xPosition);
+      }
+      return  CANVAS_HEIGHT - (int) (lineSlope * xPosition);
     }
 
     public static void resetAllValues() {
@@ -128,9 +142,6 @@ public class MyMarinaraSketch extends PApplet {
         return result;
     }
 
-
-
-
     // calculate which quadrant the mouse is in
     public int getCurrQ(int mouse_x, int mouse_y) {
         double y1 = (double) CANVAS_HEIGHT / CANVAS_WIDTH * mouseX;
@@ -153,7 +164,6 @@ public class MyMarinaraSketch extends PApplet {
             return 0;
         }
     }
-
 
     public void draw() {
         //drawDefaultWindow();
@@ -215,8 +225,6 @@ public class MyMarinaraSketch extends PApplet {
             background(0);
             drawDefaultWindow();
         }
-
-
     } // end draw
 
 } // end class
