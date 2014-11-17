@@ -1,4 +1,8 @@
 tet-java-client/bin/
+tet-java-client/.idea/misc.xml
+tet-java-client/.idea/vcs.xml
+tet-java-client/.idea/workspace.xml
+tet-java-client/.idea/libraries/gson_2_2_43.xml
 tet-java-client/out/*
 tet-java-client/.mylyn/
 tet-java-client/.metadata/
