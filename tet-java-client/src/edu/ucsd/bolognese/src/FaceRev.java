@@ -25,6 +25,8 @@ public class FaceRev extends PApplet {
     static final int ADDX         = 790;
     static final int DELETEX      = 1080;
     static final int BACKY        = 460;
+
+    boolean isSetup = false;
     int writeColor, addColor, deleteColor, backColor, highlight;
     PImage profPic, writeImg, addImg, deleteImg, backImg;
     PFont f;
@@ -46,6 +48,9 @@ public class FaceRev extends PApplet {
     }
 
     public void draw() {
+        if (!isSetup) {
+          return;
+        }
 
         writeColor = color(11, 72, 107);
         addColor = color(59, 134, 134);
@@ -88,11 +93,15 @@ public class FaceRev extends PApplet {
      * Actions when mouse is clicked
      */
     public void mousePressed() {
+        if (!isSetup) {
+          isSetup = true;
+          setup();
+        }
+
         if(overWrite(WRITEX, ZERO, RECTWIDTH, RECTHEIGHT)){
             try {
-                MyMarinaraSketch sketch = new MyMarinaraSketch();
-                String[] args = {};
-                sketch.main(args);
+                MyMarinaraSketch.main(new String[0]);
+                noLoop();
             } catch (Exception e) {
                 e.printStackTrace();
             }
