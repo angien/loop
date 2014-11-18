@@ -4,6 +4,10 @@ import processing.core.*;
 
 import java.awt.*;
 
+/*
+ * TODO: Some text box other than console to give to FaceRev
+ */
+
 public class MyMarinaraSketch extends PApplet {
 
     // Get current screen size, take out later
@@ -125,7 +129,8 @@ public class MyMarinaraSketch extends PApplet {
                 case -4:
                     result = q4_neg_char[q_count];
                     break;
-                default:
+                default: // if its a 0
+                    result = ' ';
                     break;
             }
 
@@ -162,13 +167,16 @@ public class MyMarinaraSketch extends PApplet {
 
     // gets the current direction
     // 0 is back on itself, 1 is right cross, -1 is left cross
-    public int getDirection(int prev_q, int curr_q) // refactor this...only works cause Java is PBV
+    public int getDirection(int first_q, int second_q) // refactor this...only works cause Java is PBV
     {
-        if (prev_q == 4 && curr_q == 1) // corner case
+        if (first_q == 4 && second_q == 1) // corner case
             return 1;
-        if (prev_q == 1 && curr_q == 4)
+        if (first_q == 1 && second_q == 4)
             return -1;
-        return curr_q - prev_q;
+        if (second_q == 0) {
+            return 0;
+        }
+        return second_q - first_q;
     }
 
 
