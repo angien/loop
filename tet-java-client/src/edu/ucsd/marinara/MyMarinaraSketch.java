@@ -6,6 +6,7 @@ import java.awt.*;
 
 /*
  * TODO: Some text box other than console to give to FaceRev
+ * TODO: bottom in itself should be a new
  */
 
 public class MyMarinaraSketch extends PApplet {
@@ -101,39 +102,38 @@ public class MyMarinaraSketch extends PApplet {
     // loop_direction: direction of the loop
     // q_count: number of quadrants entered
     public char getQChar(int start_q, int loop_direction, int q_count) {
-        char result = '^';
+        char result = '\n'; // new line
 
-
-            switch (start_q * loop_direction) {
-                case 1:
-                    result = q1_pos_char[q_count];
-                    break;
-                case -1:
-                    result = q1_neg_char[q_count];
-                    break;
-                case 2:
-                    result = q2_pos_char[q_count];
-                    break;
-                case -2:
-                    result = q2_neg_char[q_count];
-                    break;
-                case 3:
-                    result = q3_pos_char[q_count];
-                    break;
-                case -3:
-                    result = q3_neg_char[q_count];
-                    break;
-                case 4:
-                    result = q4_pos_char[q_count];
-                    break;
-                case -4:
-                    result = q4_neg_char[q_count];
-                    break;
-                default: // if its a 0
+        switch (start_q * loop_direction) {
+            case 1:
+                result = q1_pos_char[q_count];
+                break;
+            case -1:
+                result = q1_neg_char[q_count];
+                break;
+            case 2:
+                result = q2_pos_char[q_count];
+                break;
+            case -2:
+                result = q2_neg_char[q_count];
+                break;
+            case 3:
+                result = q3_pos_char[q_count];
+                break;
+            case -3:
+                result = q3_neg_char[q_count];
+                break;
+            case 4:
+                result = q4_pos_char[q_count];
+                break;
+            case -4:
+                result = q4_neg_char[q_count];
+                break;
+            default: // if its a 0
+                if (start_q == 2)
                     result = ' ';
-                    break;
-            }
-
+                break;
+        }
 
         return result;
     }
@@ -217,7 +217,7 @@ public class MyMarinaraSketch extends PApplet {
                 }
             }
 
-            if(branch_count > 2 && getCurrQ(mouseX, mouseY) == 0) // check that loop is valid
+            if(branch_count > 2 && branch_count < 7 && getCurrQ(mouseX, mouseY) == 0) // check that loop is valid
             {
                 //System.out.println("mouse released, the starting point is: " + Integer.toString(crossed_q[0]));
                 //System.out.println("the size is: " + Integer.toString(branch_count));
@@ -227,11 +227,8 @@ public class MyMarinaraSketch extends PApplet {
                     // - 3 because : start point, start point's next point, and  end point dont count
                     //System.out.println("branch_count:" + branch_count);
                     //System.out.println("getQChar params: " + crossed_q[1] + " " + getDirection(crossed_q[1], crossed_q[2]) + " " + (branch_count-3));
-                    char text = getQChar(crossed_q[1], getDirection(crossed_q[1], crossed_q[2]), branch_count - 3); // FIX middle parameter
-                    if (text == '^')
-                        System.out.println();
-                    else
-                        System.out.print(text);
+                    char text = getQChar(crossed_q[1], getDirection(crossed_q[1], crossed_q[2]), branch_count - 3);
+                    System.out.print(text);
                     resetAllValues();
                 }
 
