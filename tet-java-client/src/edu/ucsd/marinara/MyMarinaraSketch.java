@@ -21,6 +21,9 @@ public class MyMarinaraSketch extends PApplet {
     private float CANVAS_MID_X = CANVAS_WIDTH / 2;
     private float CANVAS_MID_Y = CANVAS_HEIGHT / 2;
 
+    // color of the line that was drawn
+    private int lineColor = color(0,255,0);
+
     // Inner rectangle variables
     private float RECT_X1 = CANVAS_WIDTH / 2;
     private float RECT_Y1 = CANVAS_HEIGHT / 2;
@@ -28,7 +31,6 @@ public class MyMarinaraSketch extends PApplet {
     private float RECT_Y2 = CANVAS_HEIGHT / 4;
 
     private static int prev_q = 0;
-
     private static int branch_count = 0;
     private static int[] crossed_q = new int[7];
 
@@ -62,9 +64,11 @@ public class MyMarinaraSketch extends PApplet {
         line(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
         line(CANVAS_WIDTH, 0, 0, CANVAS_HEIGHT);
 
+        // center input box
         rectMode(CENTER);
         rect(RECT_X1, RECT_Y1, RECT_X2, RECT_Y2);
 
+        // keyboard letters and placement
         int textSize = 32;
         int leftXPos = CANVAS_WIDTH / 10;
         int rightXPos = (int) (CANVAS_WIDTH * .8);
@@ -91,7 +95,8 @@ public class MyMarinaraSketch extends PApplet {
         return  CANVAS_HEIGHT - (int) (lineSlope * xPosition);
     }
 
-    public static void resetAllValues() {
+    public void resetAllValues() {
+        lineColor = color(0,255,0);
         prev_q = 0;
         branch_count = 0;
         crossed_q = new int[7];
@@ -180,6 +185,8 @@ public class MyMarinaraSketch extends PApplet {
 
         if (mousePressed) {
             // if mouse enters/is in quadrant
+            strokeWeight(3);
+            stroke(lineColor); // TODO: FIX THIS!!!!!!!!!
             line(mouseX, mouseY, pmouseX, pmouseY);
 
             // when moving quadrants, mouse changes before pmouse
@@ -191,12 +198,12 @@ public class MyMarinaraSketch extends PApplet {
                 // started
                 if(branch_count == 0)
                 {
-                    if (new_q == 0) {
-                        strokeWeight(3);
-                        stroke(0,255,0);
-                        rectMode(CENTER);
-                        rect(RECT_X1, RECT_Y1, RECT_X2, RECT_Y2);
+                    if (new_q == 0)
+                        lineColor = color(0,255,0);
+                    else {
+                        lineColor = color(255,0,0);
                     }
+
                     crossed_q[branch_count] = new_q;
                     branch_count++;
                     prev_q = new_q;
