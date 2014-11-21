@@ -13,4 +13,9 @@ public class ColorPrefs {
   public static final int DEFAULT_DELETE_COLOR = new Color(121, 189, 154).getRGB();
   public static final int DEFAULT_BACK_COLOR = new Color(115, 99, 87).getRGB();
   public static final int DEFAULT_BUTTON_SELECTED = new Color(224, 228, 204).getRGB();
+
+  // Keyboard Colors
+  public static final int QUADRANT_SELECTED = DEFAULT_ADD_COLOR;
+  public static final int VALID_INPUT_COLOR = new Color(0, 255, 0).getRGB();
+  public static final int INVALID_INPUT_COLOR = new Color(255, 0, 0).getRGB();
 }

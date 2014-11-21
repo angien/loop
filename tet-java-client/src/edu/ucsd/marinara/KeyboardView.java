@@ -1,5 +1,6 @@
 package edu.ucsd.marinara;
 
+import edu.ucsd.bolognese.src.ColorPrefs;
 import processing.core.*;
 
 import java.awt.*;
@@ -22,7 +23,7 @@ public class KeyboardView extends PApplet {
     private float CANVAS_MID_Y = CANVAS_HEIGHT / 2;
 
     // color of the line that was drawn
-    private int lineColor = color(0,255,0);
+    private int lineColor = ColorPrefs.VALID_INPUT_COLOR;
 
     // Inner rectangle variables
     private float RECT_X1 = CANVAS_WIDTH / 2;
@@ -59,7 +60,7 @@ public class KeyboardView extends PApplet {
     // Processing function for setting up UI
     public void setup() {
         size(CANVAS_WIDTH, CANVAS_HEIGHT);
-        background(0);
+        background(ColorPrefs.DEFAULT_BACKGROUND);
         drawDefaultWindow();
     }
 
@@ -110,7 +111,7 @@ public class KeyboardView extends PApplet {
     }
 
     public void resetAllValues() {
-        lineColor = color(0,255,0);
+        lineColor = ColorPrefs.VALID_INPUT_COLOR;
         prev_q = 0;
         branch_count = 0;
         crossed_q = new int[7];
@@ -200,7 +201,7 @@ public class KeyboardView extends PApplet {
     }
 
     public void draw() {
-        background(0);
+        background(ColorPrefs.DEFAULT_BACKGROUND);
         drawDefaultWindow();
 
         if (mousePressed) {
@@ -220,9 +221,9 @@ public class KeyboardView extends PApplet {
                 if(branch_count == 0)
                 {
                     if (new_q == 0)
-                        lineColor = color(0,255,0);
+                        lineColor = ColorPrefs.VALID_INPUT_COLOR;
                     else {
-                        lineColor = color(255,0,0);
+                        lineColor = ColorPrefs.INVALID_INPUT_COLOR;
                     }
 
                     crossed_q[branch_count] = new_q;
@@ -310,7 +311,7 @@ public class KeyboardView extends PApplet {
           return;
       }
 
-      fill(115, 99, 87);
+      fill(ColorPrefs.QUADRANT_SELECTED);
       quad(x1, y1, x2, y2, x3, y3, x4, y4);
 
       // Redraw the keyboard letters on top of the highlighted quadrant
