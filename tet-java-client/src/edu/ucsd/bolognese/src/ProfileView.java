@@ -1,13 +1,9 @@
 package edu.ucsd.bolognese.src;
 
-import edu.ucsd.marinara.MyMarinaraSketch;
+import edu.ucsd.marinara.KeyboardView;
 import processing.core.*;
 
-
-/**
- * Created by karenlo on 11/13/14.
- */
-public class FaceRev extends PApplet {
+public class ProfileView extends PApplet {
     static final int WINDOWWIDTH  = 1366;
     static final int WINDOWHEIGHT = 768;
     static final int IMGPOS       = 40;
@@ -100,7 +96,7 @@ public class FaceRev extends PApplet {
 
         if(overWrite(WRITEX, ZERO, RECTWIDTH, RECTHEIGHT)){
             try {
-                MyMarinaraSketch.main(new String[0]);
+                KeyboardView.main(new String[0]);
                 noLoop();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -141,6 +137,6 @@ public class FaceRev extends PApplet {
     }
 
     static public void main(String args[]) {
-        PApplet.main(new String[] { "edu.ucsd.bolognese.src.FaceRev" });
+        PApplet.main(new String[] { "edu.ucsd.bolognese.src.ProfileView" });
     }
 }

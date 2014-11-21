@@ -5,11 +5,11 @@ import processing.core.*;
 import java.awt.*;
 
 /*
- * TODO: Some text box other than console to give to FaceRev
+ * TODO: Some text box other than console to give to ProfileView
  * TODO: bottom in itself should be a new
  */
 
-public class MyMarinaraSketch extends PApplet {
+public class KeyboardView extends PApplet {
 
     // Get current screen size, take out later
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -46,7 +46,7 @@ public class MyMarinaraSketch extends PApplet {
     private static final char[] q4_neg_char = new char[]{'o', 'u', 'v', 'w'};
 
     public static void main(String args[]) {
-        PApplet.main(new String[]{"edu.ucsd.marinara.MyMarinaraSketch"});
+        PApplet.main(new String[]{"edu.ucsd.marinara.KeyboardView"});
     }
 
     // Processing function for setting up UI
