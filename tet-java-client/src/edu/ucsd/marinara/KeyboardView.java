@@ -34,6 +34,13 @@ public class KeyboardView extends PApplet {
     private static int branch_count = 0;
     private static int[] crossed_q = new int[7];
 
+    // Quadrant identifiers
+    private static final int QUADRANT_CENTER = 0;
+    private static final int QUADRANT_ONE = 1;
+    private static final int QUADRANT_TWO = 2;
+    private static final int QUADRANT_THREE = 3;
+    private static final int QUADRANT_FOUR = 4;
+
     // q1_pos_char is quadrant 1's "right" branch, where index 0 is the char closest to the center
     // can refactor this into 1 array per quadrant...not sure if needed to refactor
     private static final char[] q1_pos_char = new char[]{'t', 'c', 'z', '.'}; // i think its .
@@ -143,26 +150,31 @@ public class KeyboardView extends PApplet {
         return result;
     }
 
-    // calculate which quadrant the mouse is in
-    public int getCurrQ(int mouse_x, int mouse_y) {
+  /**
+   * Calculates which quadrant the mouse is in given the mouse position
+   * @param mouse_x x-position of the mouse
+   * @param mouse_y y-position of the mouse
+   * @return the quadrant the mouse is currently in(i.e. QUADRANT_ONE, QUADRANT_TWO, etc.)
+   */
+    public int getCurrQuadrant(int mouse_x, int mouse_y) {
         double y1 = (double) CANVAS_HEIGHT / CANVAS_WIDTH * mouseX;
         double y2 = (double) -CANVAS_HEIGHT / CANVAS_WIDTH * mouseX + CANVAS_HEIGHT;
 
         if (mouse_y >= y1 && mouse_y <= y2 && mouse_x <= CANVAS_MID_X - CANVAS_WIDTH / 8) {
             //System.out.println("Q1");
-            return 1;
+            return QUADRANT_ONE;
         } else if (mouse_y <= y1 && mouse_y <= y2 && mouse_y <= CANVAS_MID_Y - CANVAS_HEIGHT / 8) {
             //System.out.println("Q2");
-            return 2;
+            return QUADRANT_TWO;
         } else if (mouse_y <= y1 && mouse_y >= y2 && mouse_x >= CANVAS_MID_X + CANVAS_WIDTH / 8) {
             //System.out.println("Q3");
-            return 3;
+            return QUADRANT_THREE;
         } else if (mouse_y >= y1 && mouse_y >= y2 && mouse_y >= CANVAS_MID_Y + CANVAS_HEIGHT / 8) {
             //System.out.println("Q4");
-            return 4;
+            return QUADRANT_FOUR;
         } else {
             //System.out.println("CENTER");
-            return 0;
+            return QUADRANT_CENTER;
         }
     }
 
@@ -191,7 +203,7 @@ public class KeyboardView extends PApplet {
 
             // when moving quadrants, mouse changes before pmouse
             // mouse is start, pmouse is end
-            int new_q = getCurrQ(pmouseX, pmouseY);
+            int new_q = getCurrQuadrant(pmouseX, pmouseY);
 
             if (branch_count < 7)
             {
@@ -219,7 +231,7 @@ public class KeyboardView extends PApplet {
                 }
             }
 
-            if(branch_count > 2 && branch_count < 7 && getCurrQ(mouseX, mouseY) == 0) // check that loop is valid
+            if(branch_count > 2 && branch_count < 7 && getCurrQuadrant(mouseX, mouseY) == 0) // check that loop is valid
             {
                 //System.out.println("mouse released, the starting point is: " + Integer.toString(crossed_q[0]));
                 //System.out.println("the size is: " + Integer.toString(branch_count));
@@ -243,5 +255,4 @@ public class KeyboardView extends PApplet {
             drawDefaultWindow();
         }
     } // end draw
-
 } // end class
