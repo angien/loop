@@ -85,21 +85,53 @@ public class KeyboardView extends PApplet {
     private void drawKeyboardLetters() {
       // keyboard letters and placement
       int textSize = 32;
-      int leftXPos = CANVAS_WIDTH / 10;
-      int rightXPos = (int) (CANVAS_WIDTH * .8);
+      int leftStartXPos = (int) (CANVAS_MID_X - CANVAS_WIDTH / 6);;
+      int rightStartXPos = (int) (CANVAS_MID_X + CANVAS_WIDTH / 6);
+      int letterOffset = CANVAS_WIDTH / 15;
       fill(255);
       textSize(textSize);
-      textAlign(leftXPos);
-      text(new String(q1_pos_char), leftXPos, getQuadrantTextYPosition(leftXPos, true) + 50);
-      text(new String(q1_neg_char), leftXPos, getQuadrantTextYPosition(leftXPos, false) - 35);
-      text(new String(q2_neg_char), leftXPos, getQuadrantTextYPosition(leftXPos, true));
-      text(new String(q4_pos_char), leftXPos, getQuadrantTextYPosition(leftXPos, false) + 30);
 
-      textAlign(rightXPos);
-      text(new String(q2_pos_char), rightXPos, getQuadrantTextYPosition(rightXPos, false) - 55);
-      text(new String(q3_pos_char), rightXPos, getQuadrantTextYPosition(rightXPos, true));
-      text(new String(q3_neg_char), rightXPos, getQuadrantTextYPosition(rightXPos, false) + 30);
-      text(new String(q4_neg_char), rightXPos, getQuadrantTextYPosition(rightXPos, true) + 75);
+      // Left half of keyboard
+      for (int i = 0; i < q1_pos_char.length; ++i) {
+        int xPosition = leftStartXPos - (letterOffset * i);
+        text(q1_pos_char[i], xPosition, getQuadrantTextYPosition(xPosition, true) + 40);
+      }
+
+      for (int i = 0; i < q1_neg_char.length; ++i) {
+        int xPosition = leftStartXPos - (letterOffset * i);
+        text(q1_neg_char[i], xPosition, getQuadrantTextYPosition(xPosition, false) - 35);
+      }
+
+      for (int i = 0; i < q2_neg_char.length; ++i) {
+        int xPosition = leftStartXPos - (letterOffset * i);
+        text(q2_neg_char[i], xPosition, getQuadrantTextYPosition(xPosition, true) - 15);
+      }
+
+      for (int i = 0; i < q4_pos_char.length; ++i) {
+        int xPosition = leftStartXPos - (letterOffset * i);
+        text(q4_pos_char[i], xPosition, getQuadrantTextYPosition(xPosition, false) + 30);
+      }
+
+      // Right half of keyboard
+      for (int i = 0; i < q2_pos_char.length; ++i) {
+        int xPosition = rightStartXPos + (letterOffset * i);
+        text(q2_pos_char[i], xPosition, getQuadrantTextYPosition(xPosition, false) - 30);
+      }
+
+      for (int i = 0; i < q3_pos_char.length; ++i) {
+        int xPosition = rightStartXPos + (letterOffset * i);
+        text(q3_pos_char[i], xPosition, getQuadrantTextYPosition(xPosition, true) - 15);
+      }
+
+      for (int i = 0; i < q3_neg_char.length; ++i) {
+        int xPosition = rightStartXPos + (letterOffset * i);
+        text(q3_neg_char[i], xPosition, getQuadrantTextYPosition(xPosition, false) + 30);
+      }
+
+      for (int i = 0; i < q4_neg_char.length; ++i) {
+        int xPosition = rightStartXPos + (letterOffset * i);
+        text(q4_neg_char[i], xPosition, getQuadrantTextYPosition(xPosition, true) + 40);
+      }
     }
 
     private int getQuadrantTextYPosition(int xPosition, boolean posChar) {
