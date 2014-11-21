@@ -88,49 +88,119 @@ public class KeyboardView extends PApplet {
       int leftStartXPos = (int) (CANVAS_MID_X - CANVAS_WIDTH / 6);;
       int rightStartXPos = (int) (CANVAS_MID_X + CANVAS_WIDTH / 6);
       int letterOffset = CANVAS_WIDTH / 15;
+      char curChar = 0;
+
+      if (branch_count < 7) {
+        curChar = getQChar(crossed_q[1], getDirection(crossed_q[1], crossed_q[2]), branch_count - 3);
+      }
+
       fill(255);
       textSize(textSize);
 
       // Left half of keyboard
       for (int i = 0; i < q1_pos_char.length; ++i) {
+        if (q1_pos_char[i] == curChar) {
+          fill(ColorPrefs.SELECTED_LETTER);
+        }
+
         int xPosition = leftStartXPos - (letterOffset * i);
         text(q1_pos_char[i], xPosition, getQuadrantTextYPosition(xPosition, true) + 40);
+
+        if (q1_pos_char[i] == curChar) {
+          fill(255);
+        }
       }
 
       for (int i = 0; i < q1_neg_char.length; ++i) {
+        if (q1_neg_char[i] == curChar) {
+          fill(ColorPrefs.SELECTED_LETTER);
+        }
+
         int xPosition = leftStartXPos - (letterOffset * i);
         text(q1_neg_char[i], xPosition, getQuadrantTextYPosition(xPosition, false) - 35);
+
+        if (q1_neg_char[i] == curChar) {
+          fill(255);
+        }
       }
 
       for (int i = 0; i < q2_neg_char.length; ++i) {
+        if (q2_neg_char[i] == curChar) {
+          fill(ColorPrefs.SELECTED_LETTER);
+        }
+
         int xPosition = leftStartXPos - (letterOffset * i);
         text(q2_neg_char[i], xPosition, getQuadrantTextYPosition(xPosition, true) - 15);
+
+        if (q2_neg_char[i] == curChar) {
+          fill(255);
+        }
       }
 
       for (int i = 0; i < q4_pos_char.length; ++i) {
+        if (q4_pos_char[i] == curChar) {
+          fill(ColorPrefs.SELECTED_LETTER);
+        }
+
         int xPosition = leftStartXPos - (letterOffset * i);
         text(q4_pos_char[i], xPosition, getQuadrantTextYPosition(xPosition, false) + 30);
+
+        if (q4_pos_char[i] == curChar) {
+          fill(255);
+        }
       }
 
       // Right half of keyboard
       for (int i = 0; i < q2_pos_char.length; ++i) {
+        if (q2_pos_char[i] == curChar) {
+          fill(ColorPrefs.SELECTED_LETTER);
+        }
+
         int xPosition = rightStartXPos + (letterOffset * i);
         text(q2_pos_char[i], xPosition, getQuadrantTextYPosition(xPosition, false) - 30);
+
+        if (q2_pos_char[i] == curChar) {
+          fill(255);
+        }
       }
 
       for (int i = 0; i < q3_pos_char.length; ++i) {
+        if (q3_pos_char[i] == curChar) {
+          fill(ColorPrefs.SELECTED_LETTER);
+        }
+
         int xPosition = rightStartXPos + (letterOffset * i);
         text(q3_pos_char[i], xPosition, getQuadrantTextYPosition(xPosition, true) - 15);
+
+        if (q3_pos_char[i] == curChar) {
+          fill(255);
+        }
       }
 
       for (int i = 0; i < q3_neg_char.length; ++i) {
+        if (q3_neg_char[i] == curChar) {
+          fill(ColorPrefs.SELECTED_LETTER);
+        }
+
         int xPosition = rightStartXPos + (letterOffset * i);
         text(q3_neg_char[i], xPosition, getQuadrantTextYPosition(xPosition, false) + 30);
+
+        if (q3_neg_char[i] == curChar) {
+          fill(255);
+        }
       }
 
       for (int i = 0; i < q4_neg_char.length; ++i) {
+        if (q4_neg_char[i] == curChar) {
+          fill(ColorPrefs.SELECTED_LETTER);
+        }
+
         int xPosition = rightStartXPos + (letterOffset * i);
         text(q4_neg_char[i], xPosition, getQuadrantTextYPosition(xPosition, true) + 40);
+
+        if (q4_neg_char[i] == curChar) {
+          fill(255);
+        }
       }
     }
 

@@ -18,4 +18,5 @@ public class ColorPrefs {
   public static final int QUADRANT_SELECTED = DEFAULT_ADD_COLOR;
   public static final int VALID_INPUT_COLOR = new Color(0, 255, 0).getRGB();
   public static final int INVALID_INPUT_COLOR = new Color(255, 0, 0).getRGB();
+  public static final int SELECTED_LETTER = DEFAULT_WRITE_COLOR;
 }
