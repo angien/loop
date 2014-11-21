@@ -66,7 +66,7 @@ public class KeyboardView extends PApplet {
     // Method for drawing UI
     public void drawDefaultWindow() {
         stroke(255);
-
+        fill(255);
         // line (start x, start y, end x, end y)
         line(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
         line(CANVAS_WIDTH, 0, 0, CANVAS_HEIGHT);
@@ -75,24 +75,31 @@ public class KeyboardView extends PApplet {
         rectMode(CENTER);
         rect(RECT_X1, RECT_Y1, RECT_X2, RECT_Y2);
 
-        // keyboard letters and placement
-        int textSize = 32;
-        int leftXPos = CANVAS_WIDTH / 10;
-        int rightXPos = (int) (CANVAS_WIDTH * .8);
-        textSize(textSize);
-        textAlign(leftXPos);
-        text(new String(q1_pos_char), leftXPos, getQuadrantTextYPosition(leftXPos, true) + 50);
-        text(new String(q1_neg_char), leftXPos, getQuadrantTextYPosition(leftXPos, false) - 35);
-        text(new String(q2_neg_char), leftXPos, getQuadrantTextYPosition(leftXPos, true));
-        text(new String(q4_pos_char), leftXPos, getQuadrantTextYPosition(leftXPos, false) + 30);
-
-        textAlign(rightXPos);
-        text(new String(q2_pos_char), rightXPos, getQuadrantTextYPosition(rightXPos, false) - 55);
-        text(new String(q3_pos_char), rightXPos, getQuadrantTextYPosition(rightXPos, true));
-        text(new String(q3_neg_char), rightXPos, getQuadrantTextYPosition(rightXPos, false) + 30);
-        text(new String(q4_neg_char), rightXPos, getQuadrantTextYPosition(rightXPos, true) + 75);
+        drawKeyboardLetters();
     }
 
+  /**
+   * Draws on the the letters for the keyboard within their respective quadrants.
+   */
+    private void drawKeyboardLetters() {
+      // keyboard letters and placement
+      int textSize = 32;
+      int leftXPos = CANVAS_WIDTH / 10;
+      int rightXPos = (int) (CANVAS_WIDTH * .8);
+      fill(255);
+      textSize(textSize);
+      textAlign(leftXPos);
+      text(new String(q1_pos_char), leftXPos, getQuadrantTextYPosition(leftXPos, true) + 50);
+      text(new String(q1_neg_char), leftXPos, getQuadrantTextYPosition(leftXPos, false) - 35);
+      text(new String(q2_neg_char), leftXPos, getQuadrantTextYPosition(leftXPos, true));
+      text(new String(q4_pos_char), leftXPos, getQuadrantTextYPosition(leftXPos, false) + 30);
+
+      textAlign(rightXPos);
+      text(new String(q2_pos_char), rightXPos, getQuadrantTextYPosition(rightXPos, false) - 55);
+      text(new String(q3_pos_char), rightXPos, getQuadrantTextYPosition(rightXPos, true));
+      text(new String(q3_neg_char), rightXPos, getQuadrantTextYPosition(rightXPos, false) + 30);
+      text(new String(q4_neg_char), rightXPos, getQuadrantTextYPosition(rightXPos, true) + 75);
+    }
 
     private int getQuadrantTextYPosition(int xPosition, boolean posChar) {
         float lineSlope = (float) CANVAS_HEIGHT / CANVAS_WIDTH;
@@ -193,17 +200,19 @@ public class KeyboardView extends PApplet {
     }
 
     public void draw() {
-        //drawDefaultWindow();
+        background(0);
+        drawDefaultWindow();
 
         if (mousePressed) {
+            // when moving quadrants, mouse changes before pmouse
+            // mouse is start, pmouse is end
+            int new_q = getCurrQuadrant(pmouseX, pmouseY);
+            highlightQuadrant(new_q);
+
             // if mouse enters/is in quadrant
             strokeWeight(3);
             stroke(lineColor); // TODO: FIX THIS!!!!!!!!!
             line(mouseX, mouseY, pmouseX, pmouseY);
-
-            // when moving quadrants, mouse changes before pmouse
-            // mouse is start, pmouse is end
-            int new_q = getCurrQuadrant(pmouseX, pmouseY);
 
             if (branch_count < 7)
             {
@@ -251,8 +260,60 @@ public class KeyboardView extends PApplet {
         else // mouse released
         {
             resetAllValues();
-            background(0);
-            drawDefaultWindow();
         }
     } // end draw
+
+  /**
+   * Colors in the area of a given quadrant. If the center quadrant is given, the canvas
+   * remains unchanged.
+   * @param currentQuadrant the quadrant which will be highlighted
+   */
+    private void highlightQuadrant(int currentQuadrant) {
+      float x1, x2, x3, x4;
+      float y1, y2, y3, y4;
+
+      x1 = x2 = x3 = x4 = y1 = y2 = y3 = y4 = 0;
+      switch(currentQuadrant) {
+        case QUADRANT_ONE:
+          x2 = CANVAS_MID_X - CANVAS_WIDTH / 8;
+          y2 = CANVAS_MID_Y - CANVAS_HEIGHT / 8;
+          x3 = CANVAS_MID_X - CANVAS_WIDTH / 8;
+          y3 = CANVAS_MID_Y + CANVAS_HEIGHT / 8;
+          y4 = CANVAS_HEIGHT;
+          break;
+        case QUADRANT_TWO:
+          x2 = CANVAS_WIDTH;
+          x3 = CANVAS_MID_X + CANVAS_WIDTH / 8;
+          y3 = CANVAS_MID_Y - CANVAS_HEIGHT / 8;
+          x4 = CANVAS_MID_X - CANVAS_WIDTH / 8;
+          y4 = CANVAS_MID_Y - CANVAS_HEIGHT / 8;
+          break;
+        case QUADRANT_THREE:
+          x1 = CANVAS_WIDTH;
+          x2 = CANVAS_WIDTH;
+          y2 = CANVAS_HEIGHT;
+          x3 = CANVAS_MID_X + CANVAS_WIDTH / 8;
+          y3 = CANVAS_MID_Y + CANVAS_HEIGHT / 8;
+          x4 = CANVAS_MID_X + CANVAS_WIDTH / 8;
+          y4 = CANVAS_MID_Y - CANVAS_HEIGHT / 8;
+          break;
+        case QUADRANT_FOUR:
+          y1 = CANVAS_HEIGHT;
+          x2 = CANVAS_MID_X - CANVAS_WIDTH / 8;
+          y2 = CANVAS_MID_Y + CANVAS_HEIGHT / 8;
+          x3 = CANVAS_MID_X + CANVAS_WIDTH / 8;
+          y3 = CANVAS_MID_Y + CANVAS_HEIGHT / 8;
+          x4 = CANVAS_WIDTH;
+          y4 = CANVAS_HEIGHT;
+          break;
+        default:
+          return;
+      }
+
+      fill(115, 99, 87);
+      quad(x1, y1, x2, y2, x3, y3, x4, y4);
+
+      // Redraw the keyboard letters on top of the highlighted quadrant
+      drawKeyboardLetters();
+    }
 } // end class
