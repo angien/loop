@@ -34,12 +34,12 @@ public class ProfileView extends PApplet {
         addImg = loadImage("add.png");
         deleteImg = loadImage("delete.png");
         backImg = loadImage("back.png");
-        writeColor = color(11, 72, 107);
-        addColor = color(59, 134, 134);
-        deleteColor = color(121, 189, 154);
-        backColor = color(115, 99, 87);
-        highlight = color(224, 228, 204);
-        background(50);
+        writeColor = ColorPrefs.DEFAULT_WRITE_COLOR;
+        addColor = ColorPrefs.DEFAULT_ADD_COLOR;
+        deleteColor = ColorPrefs.DEFAULT_DELETE_COLOR;
+        backColor = ColorPrefs.DEFAULT_BACK_COLOR;
+        highlight = ColorPrefs.DEFAULT_BUTTON_SELECTED;
+        background(ColorPrefs.DEFAULT_BACKGROUND);
         f = createFont("Helvetica Neue UltraLight", 48, true);
     }
 
@@ -48,10 +48,10 @@ public class ProfileView extends PApplet {
           return;
         }
 
-        writeColor = color(11, 72, 107);
-        addColor = color(59, 134, 134);
-        deleteColor = color(121, 189, 154);
-        backColor = color(115, 99, 87);
+        writeColor = ColorPrefs.DEFAULT_WRITE_COLOR;
+        addColor = ColorPrefs.DEFAULT_ADD_COLOR;
+        deleteColor = ColorPrefs.DEFAULT_DELETE_COLOR;
+        backColor = ColorPrefs.DEFAULT_BACK_COLOR;
 
         if (overWrite(WRITEX, ZERO, RECTWIDTH, RECTHEIGHT)) writeColor = highlight;
         if (overAdd(ADDX, ZERO, RECTWIDTH, RECTHEIGHT)) addColor = highlight;
