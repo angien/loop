@@ -100,7 +100,7 @@ public class KeyboardView extends PApplet {
       int letterOffset = CANVAS_WIDTH / 15;
       char curChar = 0;
 
-      if (branch_count < 7) {
+      if (branch_count < 7 && crossed_q[0] == 0) {
         curChar = getQChar(crossed_q[1], getDirection(crossed_q[1], crossed_q[2]), branch_count - 3);
       }
 
@@ -428,7 +428,7 @@ public class KeyboardView extends PApplet {
 
       // Redraw the keyboard letters on top of the highlighted quadrant
       drawKeyboardLetters();
-      drawDefaultQuadrantText(currentQuadrant, branch_count == 2);
+      drawDefaultQuadrantText(currentQuadrant, branch_count == 2 && crossed_q[0] == 0);
     }
 
   /**
