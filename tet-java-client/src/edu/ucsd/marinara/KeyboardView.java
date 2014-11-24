@@ -42,7 +42,13 @@ public class KeyboardView extends PApplet {
     private static final int QUADRANT_THREE = 3;
     private static final int QUADRANT_FOUR = 4;
 
-    // q1_pos_char is quadrant 1's "right" branch, where index 0 is the char closest to the center
+    private static final String DELETE_QUADRANT_TEXT = "Delete";
+    private static final String DONE_QUADRANT_TEXT = "Done";
+    private static final String CLEAR_QUADRANT_TEXT = "Clear";
+    private static final String SPACE_QUADRANT_TEXT = "Space";
+
+
+  // q1_pos_char is quadrant 1's "right" branch, where index 0 is the char closest to the center
     // can refactor this into 1 array per quadrant...not sure if needed to refactor
     private static final char[] q1_pos_char = new char[]{'t', 'c', 'z', '.'}; // i think its .
     private static final char[] q1_neg_char = new char[]{'i', 'h', 'j', ','}; // i think its ,
@@ -77,6 +83,10 @@ public class KeyboardView extends PApplet {
         rect(RECT_X1, RECT_Y1, RECT_X2, RECT_Y2);
 
         drawKeyboardLetters();
+        drawDefaultQuadrantText(QUADRANT_ONE, false);
+        drawDefaultQuadrantText(QUADRANT_TWO, false);
+        drawDefaultQuadrantText(QUADRANT_THREE, false);
+        drawDefaultQuadrantText(QUADRANT_FOUR, false);
     }
 
   /**
@@ -418,5 +428,69 @@ public class KeyboardView extends PApplet {
 
       // Redraw the keyboard letters on top of the highlighted quadrant
       drawKeyboardLetters();
+      drawDefaultQuadrantText(currentQuadrant, branch_count == 2);
+    }
+
+  /**
+   * Draws the provided string in the center of the quadrant specified. However, if the center
+   * quadrant is specified, the keyboard will remain unchanged.
+   * @param quadrant the quadrant to draw text to
+   * @param selected whether the text will be shown in a selected color
+   */
+  private void drawDefaultQuadrantText(int quadrant, boolean selected) {
+    if (quadrant == QUADRANT_CENTER) {
+      return;
+    }
+
+    switch(quadrant) {
+      case QUADRANT_ONE:
+        drawQuadrantText(QUADRANT_ONE, DELETE_QUADRANT_TEXT, selected);
+        break;
+      case QUADRANT_TWO:
+        drawQuadrantText(QUADRANT_TWO, CLEAR_QUADRANT_TEXT, selected);
+        break;
+      case QUADRANT_THREE:
+        drawQuadrantText(QUADRANT_THREE, DONE_QUADRANT_TEXT, selected);
+        break;
+      case QUADRANT_FOUR:
+        drawQuadrantText(QUADRANT_FOUR, SPACE_QUADRANT_TEXT, selected);
+        break;
+    }
+  }
+
+  /**
+   * Draws the provided string in the center of the quadrant specified. However, if the center
+   * quadrant is specified, the keyboard will remain unchanged.
+   * @param quadrant the quadrant to draw text to
+   * @param quadrantText the text to be drawn
+   * @param selected whether the text will be shown in a selected color
+   */
+    private void drawQuadrantText(int quadrant, String quadrantText, boolean selected) {
+      if (quadrant == QUADRANT_CENTER) {
+        return;
+      }
+
+      if (selected) {
+        fill(ColorPrefs.SELECTED_LETTER);
+      }
+
+      switch(quadrant) {
+        case QUADRANT_ONE:
+          text(quadrantText, (CANVAS_MID_X / 3) - (textWidth(quadrantText) / 2), CANVAS_HEIGHT / 2);
+          break;
+        case QUADRANT_TWO:
+          text(quadrantText, (CANVAS_WIDTH / 2) - (textWidth(quadrantText) / 2), CANVAS_MID_Y / 3);
+          break;
+        case QUADRANT_THREE:
+          text(quadrantText, CANVAS_MID_X + (CANVAS_MID_X / 2), CANVAS_HEIGHT / 2);
+          break;
+        case QUADRANT_FOUR:
+          text(quadrantText, (CANVAS_WIDTH / 2) - (textWidth(quadrantText) / 2), (CANVAS_HEIGHT * 5) / 6);
+          break;
+      }
+
+      if (selected) {
+        fill(255);
+      }
     }
 } // end class
