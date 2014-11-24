@@ -47,17 +47,18 @@ public class KeyboardView extends PApplet {
     private static final String CLEAR_QUADRANT_TEXT = "Clear";
     private static final String SPACE_QUADRANT_TEXT = "Space";
 
-
-  // q1_pos_char is quadrant 1's "right" branch, where index 0 is the char closest to the center
+    // q1_pos_char is quadrant 1's "right" branch, where index 0 is the char closest to the center
     // can refactor this into 1 array per quadrant...not sure if needed to refactor
     private static final char[] q1_pos_char = new char[]{'t', 'c', 'z', '.'}; // i think its .
     private static final char[] q1_neg_char = new char[]{'i', 'h', 'j', ','}; // i think its ,
     private static final char[] q2_pos_char = new char[]{'y', 'b', 'p', 'q'};
     private static final char[] q2_neg_char = new char[]{'s', 'd', 'g', '\''}; // i think its '
-    private static final char[] q3_pos_char = new char[]{'n', 'm', 'f', '#'}; // accented a
+    private static final char[] q3_pos_char = new char[]{'n', 'm', 'f', '!'};
     private static final char[] q3_neg_char = new char[]{'a', 'r', 'x', '?'};
     private static final char[] q4_pos_char = new char[]{'e', 'l', 'k', '#'}; // accented e
     private static final char[] q4_neg_char = new char[]{'o', 'u', 'v', 'w'};
+
+    private String currentMessage = "";
 
     public static void main(String args[]) {
         PApplet.main(new String[]{"edu.ucsd.marinara.KeyboardView"});
@@ -361,10 +362,13 @@ public class KeyboardView extends PApplet {
 
                     // crossed_q[1] should be when 0 moves to something else
                     // - 3 because : start point, start point's next point, and  end point dont count
-                    //System.out.println("branch_count:" + branch_count);
-                    //System.out.println("getQChar params: " + crossed_q[1] + " " + getDirection(crossed_q[1], crossed_q[2]) + " " + (branch_count-3));
-                    char text = getQChar(crossed_q[1], getDirection(crossed_q[1], crossed_q[2]), branch_count - 3);
-                    System.out.print(text);
+
+                    if (!callNonLetterOption(crossed_q[1], getDirection(crossed_q[1], crossed_q[2]))) {
+                      char text = getQChar(crossed_q[1], getDirection(crossed_q[1], crossed_q[2]), branch_count - 3);
+                      System.out.print(text);
+                      currentMessage += text;
+                    }
+
                     resetAllValues();
                 }
 
@@ -492,5 +496,71 @@ public class KeyboardView extends PApplet {
       if (selected) {
         fill(ColorPrefs.DEFAULT_TEXT);
       }
+    }
+
+  /**
+   * Given the start quadrant and the loop direction, this method will determine is a non-letter
+   * option was selected(i.e. Clear, Delete, etc.). If this is the case, it will execute that
+   * option and return true. Otherwise, returns false.
+   * @param start_q starting quadrant
+   * @param loop_direction loop direction
+   * @return whether a non-letter option was selected
+   */
+  private boolean callNonLetterOption(int start_q, int loop_direction) {
+    if (start_q * loop_direction != 0) {
+      return false;
+    }
+
+    switch (start_q) {
+      case QUADRANT_ONE:
+        deleteSelected();
+        break;
+      case QUADRANT_TWO:
+        clearSelected();
+        break;
+      case QUADRANT_THREE:
+        doneSelected();
+        break;
+      case QUADRANT_FOUR:
+        spaceSelected();
+        break;
+    }
+
+    return true;
+  }
+
+  /**
+   * Called when the Clear option is selected. Will clear the current message.
+   */
+    private void clearSelected() {
+      currentMessage = "";
+    }
+
+  /**
+   * Called when the Delete option is selected. Will delete the last character in the current
+   * message. If the current message is empty, however, this will do nothing.
+   */
+    private void deleteSelected() {
+      if (currentMessage == null || currentMessage.length() == 0) {
+        return;
+      }
+
+      currentMessage = currentMessage.substring(0, currentMessage.length() - 1);
+    }
+
+  /**
+   * Called when the Done option is selected. Will handle the completed message accordingly.
+   */
+    private void doneSelected() {
+      // TODO: Do something with the current message(i.e. send back to containing view to handle)
+      System.out.println("\nCompleted Message: " + currentMessage);
+      currentMessage = "";
+    }
+
+  /**
+   * Called when the Space option is selected. Will add a space to the end of the current message.
+   */
+    private void spaceSelected() {
+      currentMessage += ' ';
     }
 } // end class
