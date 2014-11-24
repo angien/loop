@@ -9,3 +9,4 @@ tet-java-client/.metadata/
 tet-java-client/tet-java-client.iml
 tet-java-client/.idea/
 .DS_Store
+*.idea

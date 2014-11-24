@@ -1,6 +1,6 @@
 package edu.ucsd.marinara;
 
-import edu.ucsd.bolognese.src.ColorPrefs;
+import edu.ucsd.bolognese.src.TemplatePrefs;
 import processing.core.*;
 
 import java.awt.*;
@@ -23,7 +23,7 @@ public class KeyboardView extends PApplet {
     private float CANVAS_MID_Y = CANVAS_HEIGHT / 2;
 
     // color of the line that was drawn
-    private int lineColor = ColorPrefs.VALID_INPUT_COLOR;
+    private int lineColor = TemplatePrefs.VALID_INPUT_COLOR;
 
     // Inner rectangle variables
     private float RECT_X1 = CANVAS_WIDTH / 2;
@@ -67,14 +67,14 @@ public class KeyboardView extends PApplet {
     // Processing function for setting up UI
     public void setup() {
         size(CANVAS_WIDTH, CANVAS_HEIGHT);
-        background(ColorPrefs.DEFAULT_BACKGROUND);
+        background(TemplatePrefs.DEFAULT_BACKGROUND);
         drawDefaultWindow();
     }
 
     // Method for drawing UI
     public void drawDefaultWindow() {
         stroke(255);
-        fill(ColorPrefs.DEFAULT_TEXT);
+        fill(TemplatePrefs.DEFAULT_TEXT);
         // line (start x, start y, end x, end y)
         line(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
         line(CANVAS_WIDTH, 0, 0, CANVAS_HEIGHT);
@@ -105,112 +105,112 @@ public class KeyboardView extends PApplet {
         curChar = getQChar(crossed_q[1], getDirection(crossed_q[1], crossed_q[2]), branch_count - 3);
       }
 
-      fill(ColorPrefs.DEFAULT_TEXT);
+      fill(TemplatePrefs.DEFAULT_TEXT);
       textSize(textSize);
 
       // Left half of keyboard
       for (int i = 0; i < q1_pos_char.length; ++i) {
         if (q1_pos_char[i] == curChar) {
-          fill(ColorPrefs.SELECTED_TEXT);
+          fill(TemplatePrefs.SELECTED_TEXT);
         }
 
         int xPosition = leftStartXPos - (letterOffset * i);
         text(q1_pos_char[i], xPosition, getQuadrantTextYPosition(xPosition, true) + 40);
 
         if (q1_pos_char[i] == curChar) {
-          fill(ColorPrefs.DEFAULT_TEXT);
+          fill(TemplatePrefs.DEFAULT_TEXT);
         }
       }
 
       for (int i = 0; i < q1_neg_char.length; ++i) {
         if (q1_neg_char[i] == curChar) {
-          fill(ColorPrefs.SELECTED_TEXT);
+          fill(TemplatePrefs.SELECTED_TEXT);
         }
 
         int xPosition = leftStartXPos - (letterOffset * i);
         text(q1_neg_char[i], xPosition, getQuadrantTextYPosition(xPosition, false) - 35);
 
         if (q1_neg_char[i] == curChar) {
-          fill(ColorPrefs.DEFAULT_TEXT);
+          fill(TemplatePrefs.DEFAULT_TEXT);
         }
       }
 
       for (int i = 0; i < q2_neg_char.length; ++i) {
         if (q2_neg_char[i] == curChar) {
-          fill(ColorPrefs.SELECTED_TEXT);
+          fill(TemplatePrefs.SELECTED_TEXT);
         }
 
         int xPosition = leftStartXPos - (letterOffset * i);
         text(q2_neg_char[i], xPosition, getQuadrantTextYPosition(xPosition, true) - 15);
 
         if (q2_neg_char[i] == curChar) {
-          fill(ColorPrefs.DEFAULT_TEXT);
+          fill(TemplatePrefs.DEFAULT_TEXT);
         }
       }
 
       for (int i = 0; i < q4_pos_char.length; ++i) {
         if (q4_pos_char[i] == curChar) {
-          fill(ColorPrefs.SELECTED_TEXT);
+          fill(TemplatePrefs.SELECTED_TEXT);
         }
 
         int xPosition = leftStartXPos - (letterOffset * i);
         text(q4_pos_char[i], xPosition, getQuadrantTextYPosition(xPosition, false) + 30);
 
         if (q4_pos_char[i] == curChar) {
-          fill(ColorPrefs.DEFAULT_TEXT);
+          fill(TemplatePrefs.DEFAULT_TEXT);
         }
       }
 
       // Right half of keyboard
       for (int i = 0; i < q2_pos_char.length; ++i) {
         if (q2_pos_char[i] == curChar) {
-          fill(ColorPrefs.SELECTED_TEXT);
+          fill(TemplatePrefs.SELECTED_TEXT);
         }
 
         int xPosition = rightStartXPos + (letterOffset * i);
         text(q2_pos_char[i], xPosition, getQuadrantTextYPosition(xPosition, false) - 30);
 
         if (q2_pos_char[i] == curChar) {
-          fill(ColorPrefs.DEFAULT_TEXT);
+          fill(TemplatePrefs.DEFAULT_TEXT);
         }
       }
 
       for (int i = 0; i < q3_pos_char.length; ++i) {
         if (q3_pos_char[i] == curChar) {
-          fill(ColorPrefs.SELECTED_TEXT);
+          fill(TemplatePrefs.SELECTED_TEXT);
         }
 
         int xPosition = rightStartXPos + (letterOffset * i);
         text(q3_pos_char[i], xPosition, getQuadrantTextYPosition(xPosition, true) - 15);
 
         if (q3_pos_char[i] == curChar) {
-          fill(ColorPrefs.DEFAULT_TEXT);
+          fill(TemplatePrefs.DEFAULT_TEXT);
         }
       }
 
       for (int i = 0; i < q3_neg_char.length; ++i) {
         if (q3_neg_char[i] == curChar) {
-          fill(ColorPrefs.SELECTED_TEXT);
+          fill(TemplatePrefs.SELECTED_TEXT);
         }
 
         int xPosition = rightStartXPos + (letterOffset * i);
         text(q3_neg_char[i], xPosition, getQuadrantTextYPosition(xPosition, false) + 30);
 
         if (q3_neg_char[i] == curChar) {
-          fill(ColorPrefs.DEFAULT_TEXT);
+          fill(TemplatePrefs.DEFAULT_TEXT);
         }
       }
 
       for (int i = 0; i < q4_neg_char.length; ++i) {
         if (q4_neg_char[i] == curChar) {
-          fill(ColorPrefs.SELECTED_TEXT);
+          fill(TemplatePrefs.SELECTED_TEXT);
         }
 
         int xPosition = rightStartXPos + (letterOffset * i);
         text(q4_neg_char[i], xPosition, getQuadrantTextYPosition(xPosition, true) + 40);
 
         if (q4_neg_char[i] == curChar) {
-          fill(ColorPrefs.DEFAULT_TEXT);
+          fill(TemplatePrefs.DEFAULT_TEXT);
         }
       }
     }
@@ -224,7 +224,7 @@ public class KeyboardView extends PApplet {
     }
 
     public void resetAllValues() {
-        lineColor = ColorPrefs.VALID_INPUT_COLOR;
+        lineColor = TemplatePrefs.VALID_INPUT_COLOR;
         prev_q = 0;
         branch_count = 0;
         crossed_q = new int[7];
@@ -314,7 +314,7 @@ public class KeyboardView extends PApplet {
     }
 
     public void draw() {
-        background(ColorPrefs.DEFAULT_BACKGROUND);
+        background(TemplatePrefs.DEFAULT_BACKGROUND);
         drawDefaultWindow();
 
         if (mousePressed) {
@@ -334,9 +334,9 @@ public class KeyboardView extends PApplet {
                 if(branch_count == 0)
                 {
                     if (new_q == 0)
-                        lineColor = ColorPrefs.VALID_INPUT_COLOR;
+                        lineColor = TemplatePrefs.VALID_INPUT_COLOR;
                     else {
-                        lineColor = ColorPrefs.INVALID_INPUT_COLOR;
+                        lineColor = TemplatePrefs.INVALID_INPUT_COLOR;
                     }
 
                     crossed_q[branch_count] = new_q;
@@ -427,7 +427,7 @@ public class KeyboardView extends PApplet {
           return;
       }
 
-      fill(ColorPrefs.QUADRANT_SELECTED);
+      fill(TemplatePrefs.QUADRANT_SELECTED);
       quad(x1, y1, x2, y2, x3, y3, x4, y4);
 
       // Redraw the keyboard letters on top of the highlighted quadrant
@@ -475,7 +475,7 @@ public class KeyboardView extends PApplet {
       }
 
       if (selected) {
-        fill(ColorPrefs.SELECTED_TEXT);
+        fill(TemplatePrefs.SELECTED_TEXT);
       }
 
       switch(quadrant) {
@@ -494,7 +494,7 @@ public class KeyboardView extends PApplet {
       }
 
       if (selected) {
-        fill(ColorPrefs.DEFAULT_TEXT);
+        fill(TemplatePrefs.DEFAULT_TEXT);
       }
     }
 
