@@ -6,6 +6,7 @@ import edu.ucsd.bolognese.src.TemplatePrefs;
 import edu.ucsd.bolognese.src.TypingView;
 import edu.ucsd.marinara.KeyboardView;
 import processing.core.PApplet;
+import processing.core.PImage;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -19,9 +20,10 @@ public class MainViewController extends JFrame {
     static PApplet kb_embed;
     static PApplet home_embed;
     static PApplet prof_embed;
+    static PApplet cont_embed;
+
     static JLayeredPane main_pane;
     static JFrame main_frame;
-
     static String curr_top_embed;
 
     // general flow of PApplet: new() -> pane.add(...) -> init() -> noLoop()
@@ -33,8 +35,10 @@ public class MainViewController extends JFrame {
         main_frame = this;
         main_pane = new JLayeredPane();
         home_embed = new HomePage();
-        kb_embed = new TypingView();
+        kb_embed = new KeyboardView(); // @Justin, replace KeyboardView()with TypingView when you need
         prof_embed = new ProfileView();
+        cont_embed = new ContactsView();
+
 
         curr_top_embed = "none";
 
@@ -44,6 +48,8 @@ public class MainViewController extends JFrame {
         kb_embed.noLoop();
         prof_embed.init();
         prof_embed.noLoop();
+        cont_embed.init();
+        cont_embed.noLoop();
 
         main_pane.add(home_embed, 1, 0);
 
@@ -53,34 +59,34 @@ public class MainViewController extends JFrame {
 
     public static void showKeyboard(){
         if(!curr_top_embed.equals("keyboard")) {
-            System.out.println("show Keyboard");
             kb_embed.loop();
-            kb_embed.setLocation(HomePage.BUTTONWIDTH, 0);
-            main_pane.add(kb_embed, 2, 1);
+            kb_embed.setLocation(0, 0);
+            main_pane.add(kb_embed, 2, 0);
             curr_top_embed = "keyboard";
         }
     }
 
     public static void showContacts(){
         if(!curr_top_embed.equals("contacts")) {
-            System.out.println("show Contacts");
+            cont_embed.loop();
+            cont_embed.setLocation(0, 0);
+            main_pane.add(cont_embed, 2, 0);
             curr_top_embed = "contacts";
         }
     }
 
-    public static void showProfile(){
+    public static void showProfile(PImage img, String name){
         if(!curr_top_embed.equals("profile")){
-            System.out.println("show Profile");
+            ProfileView.setUserOnDisplay(img, name);
             prof_embed.loop();
-            prof_embed.setLocation(HomePage.BUTTONWIDTH, 0);
-            main_pane.add(prof_embed, 2, 1);
+            prof_embed.setLocation(0, 0);
+            main_pane.add(prof_embed, 2, 0);
             curr_top_embed = "profile";
         }
     }
 
     public static void showMail(){
         if(!curr_top_embed.equals("mail")) {
-            System.out.println("show Mail");
             curr_top_embed = "mail";
         }
     }
@@ -93,6 +99,9 @@ public class MainViewController extends JFrame {
             }else if(curr_top_embed.equals("profile")){
                 prof_embed.noLoop();
                 main_pane.remove(prof_embed);
+            }else if(curr_top_embed.equals("contacts")){
+                cont_embed.noLoop();
+                main_pane.remove(cont_embed);
             }
             curr_top_embed = "none";
         }

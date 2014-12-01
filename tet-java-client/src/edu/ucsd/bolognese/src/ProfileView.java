@@ -24,11 +24,14 @@ public class ProfileView extends PApplet {
 
     boolean isSetup = false;
     int writeColor, addColor, deleteColor, backColor, highlight;
-    PImage profPic, writeImg, addImg, deleteImg, backImg;
+    static PImage profPic, writeImg, addImg, deleteImg, backImg;
     PFont f;
+    static String profName;
 
+    // CHANGE this to default case instead of karen's profile!!!
     public void setup() {
         size(WINDOWWIDTH, WINDOWHEIGHT);
+        profName = "Karen";
         profPic = loadImage("profile.jpg");
         writeImg = loadImage("write.png");
         addImg = loadImage("add.png");
@@ -46,7 +49,6 @@ public class ProfileView extends PApplet {
     }
 
     public void draw() {
-
         writeColor = TemplatePrefs.DEFAULT_WRITE_COLOR;
         addColor = TemplatePrefs.TURQUOISE;
         deleteColor = TemplatePrefs.LIME;
@@ -81,8 +83,16 @@ public class ProfileView extends PApplet {
         fill(255);
 
         textAlign(CENTER);
-        text("Karen Lo", 250, 510);
+        text(profName, 250, 510);
+
+        noLoop();
     }
+
+    public static void setUserOnDisplay(PImage img, String name){
+        profPic = img;
+        profName = name;
+    }
+
 
     /**
      * Actions when mouse is clicked
@@ -135,7 +145,4 @@ public class ProfileView extends PApplet {
                 mouseY >= y && mouseY <= y + height;
     }
 
-//    static public void main(String args[]) {
-//        PApplet.main(new String[] { "edu.ucsd.bolognese.src.ProfileView" });
-//    }
 }

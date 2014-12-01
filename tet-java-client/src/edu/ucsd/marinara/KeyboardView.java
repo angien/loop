@@ -17,8 +17,8 @@ public class KeyboardView extends PApplet {
     private double width = screenSize.getWidth();
     private double height = screenSize.getHeight();
 
-    private int CANVAS_WIDTH = (int) (width / 2); //2160/2;
-    private int CANVAS_HEIGHT = (int) (height / 2); //1440/2;
+    private int CANVAS_WIDTH = (int) (width);// / 2); //2160/2;
+    private int CANVAS_HEIGHT = (int) (height);// / 2); //1440/2;
     private float CANVAS_MID_X = CANVAS_WIDTH / 2;
     private float CANVAS_MID_Y = CANVAS_HEIGHT / 2;
 

@@ -11,8 +11,12 @@ import java.awt.*;
  * Created by justinhung on 11/20/14.
  */
 public class TypingView extends PApplet {
-    static final int WINDOWWIDTH  = 1366;
-    static final int WINDOWHEIGHT = 768;
+    static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    static double width = screenSize.getWidth();
+    static double height = screenSize.getHeight();
+
+    static final int WINDOWWIDTH  = (int)width; //1366;
+    static final int WINDOWHEIGHT = (int)height; //768;
     static final int IMGPOS       = 40;
     static final int IMGWIDTH     = 400;
     static final int IMGHEIGHT    = 400;
