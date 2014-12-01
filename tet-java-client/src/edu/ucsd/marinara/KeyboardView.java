@@ -64,6 +64,16 @@ public class KeyboardView extends PApplet {
         PApplet.main(new String[]{"edu.ucsd.marinara.KeyboardView"});
     }
 
+    public KeyboardView() {
+
+    }
+
+    public KeyboardView(int width, int height) {
+
+        this.CANVAS_WIDTH = width;
+        this.CANVAS_WIDTH = height;
+    }
+
     // Processing function for setting up UI
     public void setup() {
         size(CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -562,5 +572,9 @@ public class KeyboardView extends PApplet {
    */
     private void spaceSelected() {
       currentMessage += ' ';
+    }
+
+    public String getCurrentMessage() {
+        return this.currentMessage;
     }
 } // end class
