@@ -52,21 +52,21 @@ public class TypingView extends PApplet {
         addImg = loadImage("add.png");
         deleteImg = loadImage("delete.png");
         backImg = loadImage("back.png");
-        writeColor = ColorPrefs.DEFAULT_WRITE_COLOR;
-        addColor = ColorPrefs.DEFAULT_ADD_COLOR;
-        deleteColor = ColorPrefs.DEFAULT_DELETE_COLOR;
-        backColor = ColorPrefs.DEFAULT_BACK_COLOR;
-        highlight = ColorPrefs.DEFAULT_BUTTON_SELECTED;
-        background(ColorPrefs.DEFAULT_BACKGROUND);
+        writeColor = TemplatePrefs.DEFAULT_WRITE_COLOR;
+        addColor = TemplatePrefs.TURQUOISE;
+        deleteColor = TemplatePrefs.LIME;
+        backColor = TemplatePrefs.DEFAULT_BACK_COLOR;
+        highlight = TemplatePrefs.DEFAULT_BUTTON_SELECTED;
+        background(TemplatePrefs.DEFAULT_BACKGROUND);
         f = createFont("Helvetica Neue UltraLight", 48, true);
     }
 
     public void draw() {
 
-        writeColor = ColorPrefs.DEFAULT_WRITE_COLOR;
-        addColor = ColorPrefs.DEFAULT_ADD_COLOR;
-        deleteColor = ColorPrefs.DEFAULT_DELETE_COLOR;
-        backColor = ColorPrefs.DEFAULT_BACK_COLOR;
+        writeColor = TemplatePrefs.DEFAULT_WRITE_COLOR;
+        addColor = TemplatePrefs.TURQUOISE;
+        deleteColor = TemplatePrefs.LIME;
+        backColor = TemplatePrefs.DEFAULT_BACK_COLOR;
         textSize(32);
         text(keyboard.getCurrentMessage(), 100, 100);
 

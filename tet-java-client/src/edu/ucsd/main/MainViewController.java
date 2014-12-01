@@ -3,6 +3,7 @@ package edu.ucsd.main;
 import edu.ucsd.bolognese.src.HomePage;
 import edu.ucsd.bolognese.src.ProfileView;
 import edu.ucsd.bolognese.src.TemplatePrefs;
+import edu.ucsd.bolognese.src.TypingView;
 import edu.ucsd.marinara.KeyboardView;
 import processing.core.PApplet;
 
@@ -32,7 +33,7 @@ public class MainViewController extends JFrame {
         main_frame = this;
         main_pane = new JLayeredPane();
         home_embed = new HomePage();
-        kb_embed = new KeyboardView();
+        kb_embed = new TypingView();
         prof_embed = new ProfileView();
 
         curr_top_embed = "none";
