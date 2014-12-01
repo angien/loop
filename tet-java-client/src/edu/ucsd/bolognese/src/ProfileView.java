@@ -41,12 +41,11 @@ public class ProfileView extends PApplet {
         highlight = TemplatePrefs.DEFAULT_BUTTON_SELECTED;
         background(TemplatePrefs.DEFAULT_BACKGROUND);
         f = createFont("Arial", 48, true);
+
+        //noLoop(); // prevent thread from starting everything else
     }
 
     public void draw() {
-        if (!isSetup) {
-          return;
-        }
 
         writeColor = TemplatePrefs.DEFAULT_WRITE_COLOR;
         addColor = TemplatePrefs.TURQUOISE;
@@ -90,8 +89,8 @@ public class ProfileView extends PApplet {
      */
     public void mousePressed() {
         if (!isSetup) {
-          isSetup = true;
-          setup();
+            isSetup = true;
+            setup();
         }
 
         if(overWrite(WRITEX, ZERO, RECTWIDTH, RECTHEIGHT)){
@@ -136,7 +135,7 @@ public class ProfileView extends PApplet {
                 mouseY >= y && mouseY <= y + height;
     }
 
-    static public void main(String args[]) {
-        PApplet.main(new String[] { "edu.ucsd.bolognese.src.ProfileView" });
-    }
+//    static public void main(String args[]) {
+//        PApplet.main(new String[] { "edu.ucsd.bolognese.src.ProfileView" });
+//    }
 }

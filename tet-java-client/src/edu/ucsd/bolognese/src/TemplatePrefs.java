@@ -7,6 +7,7 @@ import java.awt.*;
  */
 public class TemplatePrefs {
 
+
   public static final int DEFAULT_BACKGROUND = 50;
   public static final int DEFAULT_WRITE_COLOR = new Color(11, 72, 107).getRGB();
   public static final int TURQUOISE = new Color(59, 134, 134).getRGB();
@@ -14,9 +15,10 @@ public class TemplatePrefs {
   public static final int DEFAULT_BACK_COLOR = new Color(115, 99, 87).getRGB();
   public static final int DEFAULT_BUTTON_SELECTED = new Color(224, 228, 204).getRGB();
 
-  //Window Size
-  public static final int WINDOWWIDTH  = 1366;
-  public static final int WINDOWHEIGHT = 768;
+  // dynamic window size
+  static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+  public static final int WINDOWWIDTH  = (int)screenSize.getWidth();
+  public static final int WINDOWHEIGHT = (int)screenSize.getHeight();
 
   // Keyboard Colors
   public static final int QUADRANT_SELECTED = TURQUOISE;

@@ -1,5 +1,6 @@
 package edu.ucsd.bolognese.src;
 
+import edu.ucsd.main.MainViewController;
 import edu.ucsd.marinara.KeyboardView;
 import processing.core.*;
 
@@ -11,7 +12,7 @@ public class HomePage extends PApplet {
     static final int ICONSIZE = 85;
     static final int ICONX = 25;
     static final int ZERO = 0;
-    static final int BUTTONWIDTH    = 335;
+    public static final int BUTTONWIDTH    = 335;
     static final int BUTTONHEIGHT   = 130;
     static final int KEYBOARDY = 185;
     static final int CONTACTSY = 370;
@@ -31,6 +32,8 @@ public class HomePage extends PApplet {
         mailImg = loadImage("mail.png");
 
         f = createFont("Arial", 48, true);
+
+        noLoop(); // prevent thread from starving everything else
     }
 
     public void draw() {
@@ -77,13 +80,20 @@ public class HomePage extends PApplet {
      * Actions when mouse is clicked
      */
     public void mousePressed() {
-        if(overKeyboard(ZERO, KEYBOARDY, BUTTONWIDTH, BUTTONHEIGHT)){
-            try {
-                KeyboardView.main(new String[0]);
-                noLoop();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        if(overKeyboard(ZERO, KEYBOARDY, BUTTONWIDTH, BUTTONHEIGHT)) {
+            System.out.println("mousePressed on Keyboard");
+            MainViewController.removeTopEmbed("keyboard");
+            MainViewController.showKeyboard();
+        }else if(overContacts(ZERO, CONTACTSY, BUTTONWIDTH, BUTTONHEIGHT)){
+            System.out.println("mousePressed on Contacts");
+            MainViewController.removeTopEmbed("contacts");
+            MainViewController.showProfile(); // CHANGE THIS TO showContacts() WHEN FINISEHD
+        }else if(overMail(ZERO, MAILY, BUTTONWIDTH, BUTTONHEIGHT)){
+            System.out.println("mousePressed on Mail");
+            MainViewController.removeTopEmbed("mail");
+            MainViewController.showMail();
+        }else {
+            System.out.println("mousePressed on something else");
         }
     }
 
@@ -111,7 +121,7 @@ public class HomePage extends PApplet {
                 mouseY >= y && mouseY <= y + height;
     }
 
-    static public void main(String args[]) {
-        PApplet.main(new String[] { "edu.ucsd.bolognese.src.ProfileView" });
-    }
+//    static public void main(String args[]) {
+//        PApplet.main(new String[] { "edu.ucsd.bolognese.src.ProfileView" });
+//    }
 }

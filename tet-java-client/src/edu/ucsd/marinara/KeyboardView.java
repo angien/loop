@@ -60,9 +60,9 @@ public class KeyboardView extends PApplet {
 
     private String currentMessage = "";
 
-    public static void main(String args[]) {
-        PApplet.main(new String[]{"edu.ucsd.marinara.KeyboardView"});
-    }
+//    public static void main(String args[]) {
+//        PApplet.main(new String[]{"edu.ucsd.marinara.KeyboardView"});
+//    }
 
     // Processing function for setting up UI
     public void setup() {
