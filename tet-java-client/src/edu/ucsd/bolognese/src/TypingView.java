@@ -1,5 +1,6 @@
 package edu.ucsd.bolognese.src;
 
+import edu.ucsd.main.MainViewController;
 import edu.ucsd.marinara.KeyboardView;
 import processing.core.PApplet;
 import processing.core.PFont;
@@ -90,6 +91,13 @@ public class TypingView extends PApplet {
         fill(255);
 
         textAlign(CENTER);
+    }
+
+    public void mousePressed() {
+        if (overBack(ZERO, BACKY, BACKWIDTH, BACKHEIGHT)) {
+            MainViewController.removeTopEmbed("back");
+            System.out.println("back pressed");
+        }
     }
 
     /**

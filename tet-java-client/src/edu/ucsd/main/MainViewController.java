@@ -25,6 +25,7 @@ public class MainViewController extends JFrame {
     static JLayeredPane main_pane;
     static JFrame main_frame;
     static String curr_top_embed;
+    static String prev_embed;
 
     // general flow of PApplet: new() -> pane.add(...) -> init() -> noLoop()
     public MainViewController() {
@@ -41,6 +42,7 @@ public class MainViewController extends JFrame {
 
 
         curr_top_embed = "none";
+
 
         home_embed.init();
         home_embed.noLoop();
@@ -105,6 +107,11 @@ public class MainViewController extends JFrame {
             }
             curr_top_embed = "none";
         }
+    }
+
+    //would need this if we need to get back to the previous state that's not necesary the homepage
+    public static void returnToPreviousState() {
+
     }
 
 

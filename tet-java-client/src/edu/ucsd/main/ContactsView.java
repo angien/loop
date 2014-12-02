@@ -1,7 +1,5 @@
 package edu.ucsd.main;
 
-import com.sun.corba.se.spi.ior.IORTemplateList;
-import com.sun.javafx.tools.ant.DeployFXTask;
 import edu.ucsd.bolognese.src.TemplatePrefs;
 import processing.core.PApplet;
 import processing.core.PFont;
