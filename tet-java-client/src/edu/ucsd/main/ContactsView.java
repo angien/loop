@@ -5,6 +5,7 @@ import processing.core.PApplet;
 import processing.core.PFont;
 import processing.core.PImage;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 /**
@@ -16,6 +17,7 @@ public class ContactsView extends PApplet {
     ArrayList<String> prof_names;
     ArrayList<PImage> prof_images;
 
+    static int exit_circle_radius = 100;
     static int view_width = (int)(TemplatePrefs.WINDOWWIDTH);
     static int view_height = (int)(TemplatePrefs.WINDOWHEIGHT);
 
@@ -28,7 +30,13 @@ public class ContactsView extends PApplet {
     static int image_width = mid_col_x - (2 * margin_x);
     static int image_height = (int)(mid_line_y * 0.75) - margin_y;
 
-    static int curr_page_num = 0;
+    static int total_contacts = 8;
+    static int curr_page_index = 0;
+    static int last_page_index = total_contacts / 6;
+    static boolean exit_pressed = false;
+    static boolean next_pressed = false;
+
+    static Timer exit_timer;
     public void testcase(){
         PImage karen_img = loadImage("karen.jpg");
         PImage taylor_img = loadImage("taylor.jpg");
@@ -69,6 +77,19 @@ public class ContactsView extends PApplet {
         textFont(f);
         stroke(0);
 
+
+        strokeWeight(3);
+        stroke(0); // black
+        line(mid_col_x, 0, mid_col_x, view_height); // left-mid separator
+        stroke(0);
+        line(right_col_x, 0, right_col_x, view_height); // mid-right separator
+        stroke(0);
+        line(0, mid_line_y, view_width, mid_line_y); // top-bot separator
+
+        noFill();
+        arc(0, mid_line_y, exit_circle_radius, exit_circle_radius, radians(0), radians(360));
+
+        showImages(1);
 
         noLoop();
     }
@@ -119,15 +140,14 @@ public class ContactsView extends PApplet {
     }
 
     public void draw() {
-        strokeWeight(3);
-        stroke(0); // black
-        line(mid_col_x, 0, mid_col_x, view_height); // left-mid separator
-        stroke(0);
-        line(right_col_x, 0, right_col_x, view_height); // mid-right separator
-        stroke(0);
-        line(0, mid_line_y, view_width, mid_line_y); // top-bot separator
 
-        showImages(1);
+        if(exit_pressed){
+            fill(255, 0, 0);
+            arc(0, mid_line_y, exit_circle_radius, exit_circle_radius, radians(0), radians(360));
+        }else{
+            fill(255, 255, 255);
+            arc(0, mid_line_y, exit_circle_radius, exit_circle_radius, radians(0), radians(360));
+        }
 
         noLoop();
     }
@@ -144,7 +164,7 @@ public class ContactsView extends PApplet {
         }else if(mouseX > 0){
             if(mouseX > 0 && mouseX < mid_col_x){
                 return 3;
-            } else if(mouseX > mid_col_x && mouseX < right_col_x){
+            } else if(mouseX > mid_col_x && mouseX < right_col_x) {
                 return 4;
             } else{
                 return 5;
@@ -154,12 +174,43 @@ public class ContactsView extends PApplet {
         return -1;
     }
 
+    public boolean inCircle(int mouse_x, int mouse_y, int circle_x, int circle_y, int circle_radius){
+        if(( ((mouse_x - circle_x)^2) + ((mouse_y - circle_y)^2) ) < (circle_radius^2)){
+            return true;
+        }
+        return false;
+    }
+
     public void mousePressed()
     {
-        int prof_index = getProfileClicked() * (curr_page_num + 1);
-        if(prof_images.get(prof_index) != null && prof_names.get(prof_index) != null){
-            MainViewController.removeTopEmbed("contacts");
-            MainViewController.showProfile(prof_images.get(prof_index), prof_names.get(prof_index));
+        System.out.println("mouse pressed");
+        if(inCircle(mouseX, mouseY, 0, mid_line_y, (exit_circle_radius / 2))){
+            exit_pressed = true;
+            redraw();
+
+
+        }else {
+            exit_pressed = false;
+            redraw();
+            int prof_index = getProfileClicked() * (curr_page_index + 1);
+            // (x - center_x)^2 + (y - center_y)^2 < radius^2
+            if (prof_images.get(prof_index) != null && prof_names.get(prof_index) != null) {
+                MainViewController.removeTopEmbed("contacts");
+                MainViewController.showProfile(prof_images.get(prof_index), prof_names.get(prof_index));
+            }
         }
+    }
+
+    public void mouseReleased(){
+
+        exit_pressed = false;
+        redraw();
+//        if(exit_pressed && (inCircle(mouseX, mouseY, 0, mid_line_y, (exit_circle_radius / 2)))){
+//            exit_pressed = true;
+//            //MainViewController.removeTopEmbed("contacts");
+//        }else{
+//        exit_pressed = false;
+//        redraw();
+//        }
     }
 }

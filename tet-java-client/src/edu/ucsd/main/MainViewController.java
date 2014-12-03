@@ -24,7 +24,8 @@ public class MainViewController extends JFrame {
 
     static JLayeredPane main_pane;
     static JFrame main_frame;
-    static String curr_top_embed;
+
+    static String curr_embed;
     static String prev_embed;
 
     // general flow of PApplet: new() -> pane.add(...) -> init() -> noLoop()
@@ -40,8 +41,8 @@ public class MainViewController extends JFrame {
         prof_embed = new ProfileView();
         cont_embed = new ContactsView();
 
-
-        curr_top_embed = "none";
+        prev_embed = "none";
+        curr_embed = "none";
 
 
         home_embed.init();
@@ -60,52 +61,64 @@ public class MainViewController extends JFrame {
     }
 
     public static void showKeyboard(){
-        if(!curr_top_embed.equals("keyboard")) {
+        if(!curr_embed.equals("keyboard")) {
             kb_embed.loop();
             kb_embed.setLocation(0, 0);
             main_pane.add(kb_embed, 2, 0);
-            curr_top_embed = "keyboard";
+            prev_embed = curr_embed;
+            curr_embed = "keyboard";
         }
     }
 
     public static void showContacts(){
-        if(!curr_top_embed.equals("contacts")) {
+        if(!curr_embed.equals("contacts")) {
             cont_embed.loop();
             cont_embed.setLocation(0, 0);
             main_pane.add(cont_embed, 2, 0);
-            curr_top_embed = "contacts";
+            prev_embed = curr_embed;
+            curr_embed = "contacts";
         }
     }
 
     public static void showProfile(PImage img, String name){
-        if(!curr_top_embed.equals("profile")){
+        if(!curr_embed.equals("profile")){
             ProfileView.setUserOnDisplay(img, name);
             prof_embed.loop();
             prof_embed.setLocation(0, 0);
             main_pane.add(prof_embed, 2, 0);
-            curr_top_embed = "profile";
+            prev_embed = curr_embed;
+            curr_embed = "profile";
         }
     }
 
     public static void showMail(){
-        if(!curr_top_embed.equals("mail")) {
-            curr_top_embed = "mail";
+        if(!curr_embed.equals("mail")) {
+            prev_embed = curr_embed;
+            curr_embed = "mail";
         }
     }
 
     public static void removeTopEmbed(String top_embed){
-        if(!curr_top_embed.equals("none") && !curr_top_embed.equals(top_embed)){
-            if(curr_top_embed.equals("keyboard")) {
+        if(!curr_embed.equals("none") && !curr_embed.equals(top_embed)){
+            if(curr_embed.equals("keyboard")) {
                 kb_embed.noLoop();
                 main_pane.remove(kb_embed);
-            }else if(curr_top_embed.equals("profile")){
+            }else if(curr_embed.equals("profile")){
                 prof_embed.noLoop();
                 main_pane.remove(prof_embed);
-            }else if(curr_top_embed.equals("contacts")){
+            }else if(curr_embed.equals("contacts")){
                 cont_embed.noLoop();
                 main_pane.remove(cont_embed);
             }
-            curr_top_embed = "none";
+
+            curr_embed = "none";
+            //curr_embed = prev_embed;
+            //prev_embed = "none";
+            //main_pane.show();
+//            if(!prev_embed.equals("none")){
+//                curr_embed = prev_embed;
+//                prev_embed = "none";
+//            }
         }
     }
 
