@@ -24,15 +24,19 @@ public class ProfileView extends PApplet {
 
     boolean isSetup = false;
     int writeColor, addColor, deleteColor, backColor, highlight;
-    static PImage profPic, writeImg, addImg, deleteImg, backImg;
+    static PImage writeImg, addImg, deleteImg, backImg;
     PFont f;
-    static String profName;
+    PImage profPic;
+    String profName;
+
+    public ProfileView(PImage img, String name){
+        profPic = img;
+        profName = name;
+    }
 
     // CHANGE this to default case instead of karen's profile!!!
     public void setup() {
         size(WINDOWWIDTH, WINDOWHEIGHT);
-        profName = "Karen";
-        profPic = loadImage("profile.jpg");
         writeImg = loadImage("write.png");
         addImg = loadImage("add.png");
         deleteImg = loadImage("delete.png");
@@ -87,12 +91,6 @@ public class ProfileView extends PApplet {
 
         noLoop();
     }
-
-    public static void setUserOnDisplay(PImage img, String name){
-        profPic = img;
-        profName = name;
-    }
-
 
     /**
      * Actions when mouse is clicked

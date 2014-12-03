@@ -36,57 +36,58 @@ public class MainViewController extends JFrame {
 
         main_frame = this;
         main_pane = new JLayeredPane();
-        home_embed = new HomePage();
-        kb_embed = new KeyboardView(); // @Justin, replace KeyboardView()with TypingView when you need
-        prof_embed = new ProfileView();
-        cont_embed = new ContactsView();
 
         prev_embed = "none";
         curr_embed = "none";
 
 
-        home_embed.init();
-        home_embed.noLoop();
-        kb_embed.init();
-        kb_embed.noLoop();
-        prof_embed.init();
-        prof_embed.noLoop();
-        cont_embed.init();
-        cont_embed.noLoop();
-
-        main_pane.add(home_embed, 1, 0);
+        showHome();
 
         add(main_pane);
         setVisible(true);
     }
 
+    public static void showHome(){
+        if(!curr_embed.equals("home")) {
+            home_embed = new HomePage();
+            home_embed.init();
+            home_embed.loop();
+            home_embed.setLocation(0, 0);
+            main_pane.add(home_embed, 1, 0);
+            curr_embed = "home";
+        }
+    }
+
     public static void showKeyboard(){
         if(!curr_embed.equals("keyboard")) {
+            kb_embed = new KeyboardView();
+            kb_embed.init();
             kb_embed.loop();
             kb_embed.setLocation(0, 0);
-            main_pane.add(kb_embed, 2, 0);
-            prev_embed = curr_embed;
+            main_pane.add(kb_embed, 1, 0);
             curr_embed = "keyboard";
         }
     }
 
     public static void showContacts(){
         if(!curr_embed.equals("contacts")) {
+            cont_embed = new ContactsView();
+            cont_embed.init();
             cont_embed.loop();
             cont_embed.setLocation(0, 0);
-            main_pane.add(cont_embed, 2, 0);
-            prev_embed = curr_embed;
+            main_pane.add(cont_embed, 1, 0);
             curr_embed = "contacts";
         }
     }
 
     public static void showProfile(PImage img, String name){
         if(!curr_embed.equals("profile")){
-            ProfileView.setUserOnDisplay(img, name);
+            prof_embed = new ProfileView(img, name);
+            prof_embed.init();
             prof_embed.loop();
+            System.out.println("Profile name: " + name);
             prof_embed.setLocation(0, 0);
             main_pane.add(prof_embed, 2, 0);
-            prev_embed = curr_embed;
             curr_embed = "profile";
         }
     }
@@ -99,7 +100,7 @@ public class MainViewController extends JFrame {
     }
 
     public static void removeTopEmbed(String top_embed){
-        if(!curr_embed.equals("none") && !curr_embed.equals(top_embed)){
+        if(!curr_embed.equals("none")){
             if(curr_embed.equals("keyboard")) {
                 kb_embed.noLoop();
                 main_pane.remove(kb_embed);
@@ -108,21 +109,21 @@ public class MainViewController extends JFrame {
                 main_pane.remove(prof_embed);
             }else if(curr_embed.equals("contacts")){
                 cont_embed.noLoop();
-                main_pane.remove(cont_embed);
-            }
+                main_pane.removeAll();
+                showHome();
 
+            }else{
+                System.out.println("Error: no view to remove");
+                return;
+            }
             curr_embed = "none";
-            //curr_embed = prev_embed;
-            //prev_embed = "none";
-            //main_pane.show();
-//            if(!prev_embed.equals("none")){
-//                curr_embed = prev_embed;
-//                prev_embed = "none";
-//            }
         }
     }
 
-    //would need this if we need to get back to the previous state that's not necesary the homepage
+    // Justin: would need this if we need to get back to the previous state that's not necesary the homepage
+    // Ryan: I agree, and i think the easiest way is to put the views order in a stack, and just repopulate the
+    //       previous view when gone back...caching the view is weird and I am having hard time with it so far, so I
+    //       changed it just destroying and recreating view. Not that slow, more mem efficient, just slow startup
     public static void returnToPreviousState() {
 
     }

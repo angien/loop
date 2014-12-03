@@ -33,7 +33,7 @@ public class ContactsView extends PApplet {
     static int total_contacts = 8;
     static int curr_page_index = 0;
     static int last_page_index = total_contacts / 6;
-    static boolean exit_pressed = false;
+    private boolean exit_pressed = false;
     static boolean next_pressed = false;
 
     static Timer exit_timer;
@@ -174,6 +174,7 @@ public class ContactsView extends PApplet {
         return -1;
     }
 
+    // formula for point within ellipse/circle: (x - center_x)^2 + (y - center_y)^2 < radius^2
     public boolean inCircle(int mouse_x, int mouse_y, int circle_x, int circle_y, int circle_radius){
         if(( ((mouse_x - circle_x)^2) + ((mouse_y - circle_y)^2) ) < (circle_radius^2)){
             return true;
@@ -181,36 +182,18 @@ public class ContactsView extends PApplet {
         return false;
     }
 
-    public void mousePressed()
-    {
-        System.out.println("mouse pressed");
+    public void mousePressed(){
         if(inCircle(mouseX, mouseY, 0, mid_line_y, (exit_circle_radius / 2))){
             exit_pressed = true;
-            redraw();
-
-
+            MainViewController.removeTopEmbed("contacts");
         }else {
             exit_pressed = false;
             redraw();
             int prof_index = getProfileClicked() * (curr_page_index + 1);
-            // (x - center_x)^2 + (y - center_y)^2 < radius^2
-            if (prof_images.get(prof_index) != null && prof_names.get(prof_index) != null) {
-                MainViewController.removeTopEmbed("contacts");
+            if(prof_images.get(prof_index) != null && prof_names.get(prof_index) != null){
                 MainViewController.showProfile(prof_images.get(prof_index), prof_names.get(prof_index));
             }
         }
     }
 
-    public void mouseReleased(){
-
-        exit_pressed = false;
-        redraw();
-//        if(exit_pressed && (inCircle(mouseX, mouseY, 0, mid_line_y, (exit_circle_radius / 2)))){
-//            exit_pressed = true;
-//            //MainViewController.removeTopEmbed("contacts");
-//        }else{
-//        exit_pressed = false;
-//        redraw();
-//        }
-    }
 }
