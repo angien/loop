@@ -22,13 +22,14 @@ public class TypingView extends PApplet {
     static final int WINDOWWIDTH  = (int)width; //1366;
     static final int WINDOWHEIGHT = (int)height; //768;
     static final int IMGPOS       = 40;
-    static final int BACKWIDTH    = 440;
+    static final int BACKWIDTH    = 150;
     static final int BACKHEIGHT   = 70;
     static final int ZERO         = 0;
     static final int BACKSIZE     = 65;
-    static final int BACKY        = 460;
+    static final int BACKY        = WINDOWHEIGHT*4/5;
 
     KeyboardView keyboard;
+    JLayeredPane main_pane = new JLayeredPane();
 
     boolean isSetup = false;
     String message = null;
@@ -42,8 +43,10 @@ public class TypingView extends PApplet {
     public TypingView () {
         myLay = new BorderLayout();
         setLayout(myLay);
+        add(main_pane);
         keyboard = new KeyboardView();
-        add(keyboard, BorderLayout.EAST);
+        keyboard.setLocation(WINDOWWIDTH/6, WINDOWHEIGHT/20);
+        main_pane.add(keyboard,1,0);
         keyboard.init();
     }
 
@@ -67,7 +70,7 @@ public class TypingView extends PApplet {
         textSize(32);
         fill(TemplatePrefs.DEFAULT_TEXT);
         textFont(f);
-        text(message, (int) (width / 3), (int) (height * 3 / 4));
+        text(message, (int) (width/5), WINDOWHEIGHT*5/6);
 
 
         if (overBack(ZERO, BACKY, BACKWIDTH, BACKHEIGHT)) backColor = highlight;
