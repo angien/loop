@@ -17,8 +17,8 @@ public class KeyboardView extends PApplet {
     private double width = screenSize.getWidth();
     private double height = screenSize.getHeight();
 
-    private int CANVAS_WIDTH = (int) (width);// / 2); //2160/2;
-    private int CANVAS_HEIGHT = (int) (height);// / 2); //1440/2;
+    private int CANVAS_WIDTH = (int) (width/2);// / 2); //2160/2;
+    private int CANVAS_HEIGHT = (int) (height/2);// / 2); //1440/2;
     private float CANVAS_MID_X = CANVAS_WIDTH / 2;
     private float CANVAS_MID_Y = CANVAS_HEIGHT / 2;
 
@@ -60,9 +60,9 @@ public class KeyboardView extends PApplet {
 
     private String currentMessage = "";
 
-//    public static void main(String args[]) {
-//        PApplet.main(new String[]{"edu.ucsd.marinara.KeyboardView"});
-//    }
+    public static void main(String args[]) {
+        PApplet.main(new String[]{"edu.ucsd.marinara.KeyboardView"});
+    }
 
     public KeyboardView() {
 
@@ -71,7 +71,7 @@ public class KeyboardView extends PApplet {
     public KeyboardView(int width, int height) {
 
         this.CANVAS_WIDTH = width;
-        this.CANVAS_WIDTH = height;
+        this.CANVAS_HEIGHT = height;
     }
 
     // Processing function for setting up UI
@@ -376,6 +376,7 @@ public class KeyboardView extends PApplet {
                     if (!callNonLetterOption(crossed_q[1], getDirection(crossed_q[1], crossed_q[2]))) {
                       char text = getQChar(crossed_q[1], getDirection(crossed_q[1], crossed_q[2]), branch_count - 3);
                       System.out.print(text);
+                     // letter = text;
                       currentMessage += text;
                     }
 
@@ -574,7 +575,10 @@ public class KeyboardView extends PApplet {
       currentMessage += ' ';
     }
 
-    public String getCurrentMessage() {
+    public String getCurrentMessage()
+    {
+        char letter;
+
         return this.currentMessage;
     }
 } // end class

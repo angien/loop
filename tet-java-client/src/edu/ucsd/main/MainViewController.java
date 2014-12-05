@@ -25,8 +25,8 @@ public class MainViewController extends JFrame {
     static JLayeredPane main_pane;
     static JFrame main_frame;
 
-    static String curr_embed;
-    static String prev_embed;
+    static String curr_embed = "none";
+    static String prev_embed = "none";
 
     // general flow of PApplet: new() -> pane.add(...) -> init() -> noLoop()
     public MainViewController() {
@@ -60,7 +60,7 @@ public class MainViewController extends JFrame {
 
     public static void showKeyboard(){
         if(!curr_embed.equals("keyboard")) {
-            kb_embed = new KeyboardView();
+            kb_embed = new TypingView();
             kb_embed.init();
             kb_embed.loop();
             kb_embed.setLocation(0, 0);
