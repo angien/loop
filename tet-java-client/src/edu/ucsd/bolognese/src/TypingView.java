@@ -75,6 +75,11 @@ public class TypingView extends PApplet {
 
         if (overBack(ZERO, BACKY, BACKWIDTH, BACKHEIGHT)) backColor = highlight;
 
+        //TEXT TO SPeak
+        if (keyboard.getDone()) {
+//            Runtime.getRuntime().exec();
+        }
+
         // buttons
         fill(backColor);
         noStroke();

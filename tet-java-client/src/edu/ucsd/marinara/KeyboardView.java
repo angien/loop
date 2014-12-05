@@ -59,6 +59,7 @@ public class KeyboardView extends PApplet {
     private static final char[] q4_neg_char = new char[]{'o', 'u', 'v', 'w'};
 
     private String currentMessage = "";
+    private boolean done = false;
 
     public static void main(String args[]) {
         PApplet.main(new String[]{"edu.ucsd.marinara.KeyboardView"});
@@ -376,7 +377,7 @@ public class KeyboardView extends PApplet {
                     if (!callNonLetterOption(crossed_q[1], getDirection(crossed_q[1], crossed_q[2]))) {
                       char text = getQChar(crossed_q[1], getDirection(crossed_q[1], crossed_q[2]), branch_count - 3);
                       System.out.print(text);
-                     // letter = text;
+                      done = false;
                       currentMessage += text;
                     }
 
@@ -566,6 +567,7 @@ public class KeyboardView extends PApplet {
       // TODO: Do something with the current message(i.e. send back to containing view to handle)
       System.out.println("\nCompleted Message: " + currentMessage);
       currentMessage = "";
+      done = true;
     }
 
   /**
@@ -577,8 +579,12 @@ public class KeyboardView extends PApplet {
 
     public String getCurrentMessage()
     {
-        char letter;
 
         return this.currentMessage;
+    }
+
+    public boolean getDone()
+    {
+        return done;
     }
 } // end class
