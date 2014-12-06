@@ -1,9 +1,13 @@
 package edu.ucsd.marinara;
 
 import edu.ucsd.bolognese.src.TemplatePrefs;
+import edu.ucsd.main.DatabaseConnect;
 import processing.core.*;
 
 import java.awt.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 /*
  * TODO: Some text box other than console to give to ProfileView
@@ -568,6 +572,15 @@ public class KeyboardView extends PApplet {
     private void doneSelected() {
       // TODO: Do something with the current message(i.e. send back to containing view to handle)
       System.out.println("\nCompleted Message: " + currentMessage);
+        try {
+            Connection conn = new DatabaseConnect().getConnection();
+            Statement stmt = conn.createStatement();
+            int rs = stmt.executeUpdate( "INSERT INTO test.Messages (message) VALUES ('" + currentMessage + "')") ;
+            conn.close();
+        }
+        catch (Exception e) {
+            System.out.println("Failed connection to database: " + e.toString());
+        }
       currentMessage = "";
       done = true;
     }
