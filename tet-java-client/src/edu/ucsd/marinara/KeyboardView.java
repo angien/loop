@@ -364,6 +364,9 @@ public class KeyboardView extends PApplet {
                     branch_count++;
                 }
             }
+            else {
+                resetAllValues();
+            }
 
             if(branch_count > 2 && branch_count < 7 && getCurrQuadrant(mouseX, mouseY) == 0) // check that loop is valid
             {
@@ -380,9 +383,8 @@ public class KeyboardView extends PApplet {
                       done = false;
                       currentMessage += text;
                     }
-
-                    resetAllValues();
                 }
+                resetAllValues();
 
             }
         }
