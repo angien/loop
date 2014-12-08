@@ -22,6 +22,7 @@ INSERT INTO contacts (firstname, lastname) VALUES ("Angie", "Nguyen");
 INSERT INTO contacts (firstname, lastname) VALUES ("Justin", "Hung");
 INSERT INTO contacts (firstname, lastname) VALUES ("Ryan", "Liao");
 INSERT INTO contacts (firstname, lastname) VALUES ("Sean", "Rowan");
+INSERT INTO contacts (firstname, lastname) VALUES ("Alvin", "Portillo");
 
 
 -- QUERY FOR GETTING MOST COMMON

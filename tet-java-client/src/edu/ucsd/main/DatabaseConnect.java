@@ -14,7 +14,6 @@ public class DatabaseConnect {
     String password = "loop";
 
     String dbms ="mysql";
-    //String serverName = "75.80.58.229";
     String serverName = "localhost";
     String portNumber ="3306";
 

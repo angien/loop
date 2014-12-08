@@ -9,6 +9,7 @@ import processing.core.*;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class ProfileView extends PApplet {
     static final int WINDOWWIDTH  = TemplatePrefs.WINDOWWIDTH;
@@ -36,12 +37,13 @@ public class ProfileView extends PApplet {
     PImage profPic;
     String profName;
     int profID;
-    ArrayList<String> commonMessages;
+    String[] commonMessages = {"","",""};
 
     public ProfileView(PImage img, String name, int uid){
         profPic = img;
         profName = name;
         profID = uid;
+
 
         try {
             Statement stmt = DatabaseConnect.conn.createStatement();
@@ -51,7 +53,10 @@ public class ProfileView extends PApplet {
                             + mod_uid + "') AS userMessages GROUP BY message ORDER BY COUNT(message) DESC LIMIT 3");
 
             System.out.println("MOST COMMON MESSAGES");
+            int i = 0;
             while(rs.next()) {
+                commonMessages[i] = rs.getString("message");
+                i++;
                 System.out.println(rs.getString("message"));
             }
         }
@@ -115,6 +120,10 @@ public class ProfileView extends PApplet {
         textAlign(CENTER);
         text(profName, 250, 510);
 
+        text(commonMessages[0], 900,300 );
+        text(commonMessages[1], 900,400 );
+        text(commonMessages[2], 900,500 );
+
 
     }
 
@@ -130,7 +139,6 @@ public class ProfileView extends PApplet {
         if(overWrite(WRITEX, ZERO, RECTWIDTH, RECTHEIGHT)){
             try {
                 MainViewController.removeTopEmbed("profile");
-                MainViewController.removeTopEmbed("contacts");
                 MainViewController.showKeyboard(profID);
 
             } catch (Exception e) {
