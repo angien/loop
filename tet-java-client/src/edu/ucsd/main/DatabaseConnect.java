@@ -18,8 +18,15 @@ public class DatabaseConnect {
     String serverName = "localhost";
     String portNumber ="3306";
 
-    public DatabaseConnect () {
+    public static Connection conn =null;
 
+    public DatabaseConnect () {
+        try {
+            this.conn = getConnection();
+        }
+        catch (Exception e) {
+            System.out.println("Database connection error: " + e.toString());
+        }
     }
 
     public Connection getConnection() throws SQLException {

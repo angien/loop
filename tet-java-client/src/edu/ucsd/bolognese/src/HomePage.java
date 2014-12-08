@@ -96,7 +96,7 @@ public class HomePage extends PApplet {
     public void mousePressed() {
         if(overKeyboard(KEYBOARDX, KEYBOARDY, BUTTONWIDTH, BUTTONHEIGHT)) {
             MainViewController.removeTopEmbed("keyboard");
-            MainViewController.showKeyboard();
+            MainViewController.showKeyboard(-1);
         }else if(overContacts(CONTACTSX, CONTACTSY, BUTTONWIDTH, BUTTONHEIGHT)){
             MainViewController.removeTopEmbed("contacts");
             MainViewController.showContacts(); // CHANGE THIS TO showContacts() WHEN FINISEHD

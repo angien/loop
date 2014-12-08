@@ -1,11 +1,18 @@
 package edu.ucsd.bolognese.src;
 
+import com.sun.org.apache.xalan.internal.xsltc.compiler.Template;
+import edu.ucsd.main.DatabaseConnect;
+import edu.ucsd.main.MainViewController;
 import edu.ucsd.marinara.KeyboardView;
 import processing.core.*;
 
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+
 public class ProfileView extends PApplet {
-    static final int WINDOWWIDTH  = 1366;
-    static final int WINDOWHEIGHT = 768;
+    static final int WINDOWWIDTH  = TemplatePrefs.WINDOWWIDTH;
+    static final int WINDOWHEIGHT = TemplatePrefs.WINDOWHEIGHT;
     static final int IMGPOS       = 40;
     static final int IMGWIDTH     = 400;
     static final int IMGHEIGHT    = 400;
@@ -28,10 +35,29 @@ public class ProfileView extends PApplet {
     PFont f;
     PImage profPic;
     String profName;
+    int profID;
+    ArrayList<String> commonMessages;
 
-    public ProfileView(PImage img, String name){
+    public ProfileView(PImage img, String name, int uid){
         profPic = img;
         profName = name;
+        profID = uid;
+
+        try {
+            Statement stmt = DatabaseConnect.conn.createStatement();
+            int mod_uid = uid + 2;
+            ResultSet rs = stmt.executeQuery(
+                    "SELECT message, COUNT(message) AS messageCount FROM (SELECT * FROM test.messages WHERE pid='"
+                            + mod_uid + "') AS userMessages GROUP BY message ORDER BY COUNT(message) DESC LIMIT 3");
+
+            System.out.println("MOST COMMON MESSAGES");
+            while(rs.next()) {
+                System.out.println(rs.getString("message"));
+            }
+        }
+        catch (Exception e) {
+            System.out.println("Something broke lol: " + e.toString());
+        }
     }
 
     // CHANGE this to default case instead of karen's profile!!!
@@ -89,7 +115,7 @@ public class ProfileView extends PApplet {
         textAlign(CENTER);
         text(profName, 250, 510);
 
-        noLoop();
+
     }
 
     /**
@@ -103,8 +129,20 @@ public class ProfileView extends PApplet {
 
         if(overWrite(WRITEX, ZERO, RECTWIDTH, RECTHEIGHT)){
             try {
-                KeyboardView.main(new String[0]);
-                noLoop();
+                MainViewController.removeTopEmbed("profile");
+                MainViewController.removeTopEmbed("contacts");
+                MainViewController.showKeyboard(profID);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        if(overBack(ZERO, BACKY, BACKWIDTH, BACKHEIGHT)){
+            try {
+                MainViewController.removeTopEmbed("profile");
+                MainViewController.showContacts();
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

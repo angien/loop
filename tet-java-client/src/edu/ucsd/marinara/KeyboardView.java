@@ -64,13 +64,14 @@ public class KeyboardView extends PApplet {
 
     private String currentMessage = "";
     private boolean done = false;
+    private int uid;
 
     public static void main(String args[]) {
         PApplet.main(new String[]{"edu.ucsd.marinara.KeyboardView"});
     }
 
-    public KeyboardView() {
-
+    public KeyboardView(int uid) {
+        this.uid = uid;
     }
 
     public KeyboardView(int width, int height) {
@@ -573,13 +574,13 @@ public class KeyboardView extends PApplet {
       // TODO: Do something with the current message(i.e. send back to containing view to handle)
       System.out.println("\nCompleted Message: " + currentMessage);
         try {
-            Connection conn = new DatabaseConnect().getConnection();
-            Statement stmt = conn.createStatement();
-            int rs = stmt.executeUpdate( "INSERT INTO test.Messages (message) VALUES ('" + currentMessage + "')") ;
-            conn.close();
+            Statement stmt = DatabaseConnect.conn.createStatement();
+            int mod_uid = uid + 2;
+            int rs = stmt.executeUpdate(
+                    "INSERT INTO test.messages (message, pid) VALUES ('" + currentMessage + "','" + mod_uid + "')") ;
         }
         catch (Exception e) {
-            System.out.println("Failed connection to database: " + e.toString());
+            System.out.println("Something broke lol: " + e.toString());
         }
       currentMessage = "";
       done = true;

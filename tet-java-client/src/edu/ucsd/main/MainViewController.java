@@ -11,6 +11,7 @@ import processing.core.PImage;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.sql.SQLException;
 
 /**
  * Created by ryanliao on 11/30/14.
@@ -58,9 +59,9 @@ public class MainViewController extends JFrame {
         }
     }
 
-    public static void showKeyboard(){
+    public static void showKeyboard(int uid){
         if(!curr_embed.equals("keyboard")) {
-            kb_embed = new TypingView();
+            kb_embed = new TypingView(uid);
             kb_embed.init();
             kb_embed.loop();
             kb_embed.setLocation(0, 0);
@@ -80,9 +81,9 @@ public class MainViewController extends JFrame {
         }
     }
 
-    public static void showProfile(PImage img, String name){
+    public static void showProfile(PImage img, String name, int uid){
         if(!curr_embed.equals("profile")){
-            prof_embed = new ProfileView(img, name);
+            prof_embed = new ProfileView(img, name, uid);
             prof_embed.init();
             prof_embed.loop();
             System.out.println("Profile name: " + name);
@@ -130,9 +131,11 @@ public class MainViewController extends JFrame {
 
 
     public static void main(String[] args){
+
         SwingUtilities.invokeLater(new Runnable(){
             @Override
             public void run(){
+                new DatabaseConnect();
                 new MainViewController();
             }
        });

@@ -40,11 +40,11 @@ public class TypingView extends PApplet {
     PFont f;
 
 
-    public TypingView () {
+    public TypingView (int uid) {
         myLay = new BorderLayout();
         setLayout(myLay);
         add(main_pane);
-        keyboard = new KeyboardView();
+        keyboard = new KeyboardView(uid);
         keyboard.setLocation(WINDOWWIDTH/6, WINDOWHEIGHT/20);
         main_pane.add(keyboard,1,0);
         keyboard.init();
@@ -90,7 +90,7 @@ public class TypingView extends PApplet {
 
     public void mousePressed() {
         if (overBack(ZERO, BACKY, BACKWIDTH, BACKHEIGHT)) {
-            MainViewController.removeTopEmbed("back");
+            MainViewController.removeTopEmbed("keyboard");
             System.out.println("back pressed");
         }
     }
