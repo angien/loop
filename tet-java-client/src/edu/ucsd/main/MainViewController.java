@@ -29,6 +29,8 @@ public class MainViewController extends JFrame {
     static String curr_embed = "none";
     static String prev_embed = "none";
 
+    static KeyboardView keyboard;
+
     // general flow of PApplet: new() -> pane.add(...) -> init() -> noLoop()
     public MainViewController() {
         super("Embedded PApplet");
@@ -45,7 +47,6 @@ public class MainViewController extends JFrame {
         showHome();
 
         add(main_pane);
-        setVisible(true);
     }
 
     public static void showHome(){
@@ -56,17 +57,29 @@ public class MainViewController extends JFrame {
             home_embed.setLocation(0, 0);
             main_pane.add(home_embed, 1, 0);
             curr_embed = "home";
+
+            main_frame.setVisible(true);
         }
     }
 
     public static void showKeyboard(int uid){
         if(!curr_embed.equals("keyboard")) {
-            kb_embed = new TypingView(uid);
+            keyboard = new KeyboardView(uid);
+            kb_embed = new TypingView(keyboard);
+
             kb_embed.init();
+            keyboard.init();
+            
             kb_embed.loop();
+
             kb_embed.setLocation(0, 0);
+            keyboard.setLocation(TemplatePrefs.WINDOWWIDTH/6, TemplatePrefs.WINDOWHEIGHT/20);
+
             main_pane.add(kb_embed, 1, 0);
+            main_pane.add(keyboard, 2, 0);
             curr_embed = "keyboard";
+
+            main_frame.setVisible(true);
         }
     }
 
@@ -78,6 +91,8 @@ public class MainViewController extends JFrame {
             cont_embed.setLocation(0, 0);
             main_pane.add(cont_embed, 1, 0);
             curr_embed = "contacts";
+
+            main_frame.setVisible(true);
         }
     }
 
@@ -90,6 +105,8 @@ public class MainViewController extends JFrame {
             prof_embed.setLocation(0, 0);
             main_pane.add(prof_embed, 2, 0);
             curr_embed = "profile";
+
+            main_frame.setVisible(true);
         }
     }
 
@@ -98,6 +115,8 @@ public class MainViewController extends JFrame {
             prev_embed = curr_embed;
             curr_embed = "mail";
         }
+
+        main_frame.setVisible(true);
     }
 
     public static void removeTopEmbed(String top_embed){
@@ -105,6 +124,7 @@ public class MainViewController extends JFrame {
             if(curr_embed.equals("keyboard")) {
                 kb_embed.noLoop();
                 main_pane.remove(kb_embed);
+                main_pane.remove(keyboard);
             }else if(curr_embed.equals("profile")){
                 prof_embed.noLoop();
                 main_pane.remove(prof_embed);

@@ -40,14 +40,14 @@ public class TypingView extends PApplet {
     PFont f;
 
 
-    public TypingView (int uid) {
-        myLay = new BorderLayout();
-        setLayout(myLay);
-        add(main_pane);
-        keyboard = new KeyboardView(uid);
-        keyboard.setLocation(WINDOWWIDTH/6, WINDOWHEIGHT/20);
-        main_pane.add(keyboard,1,0);
-        keyboard.init();
+    public TypingView (KeyboardView keyboard) {
+//        myLay = new BorderLayout();
+//        setLayout(myLay);
+//        add(main_pane);
+        this.keyboard = keyboard;
+//        keyboard.setLocation(WINDOWWIDTH/6, WINDOWHEIGHT/20);
+//        main_pane.add(keyboard,1);
+//        keyboard.init();
     }
 
     public void setup() {
