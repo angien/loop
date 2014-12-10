@@ -33,7 +33,6 @@ public class TypingView extends PApplet {
 
     boolean isSetup = false;
     String message = null;
-    BorderLayout myLay = null;
 
     int backColor, highlight;
     PImage profPic, backImg;
@@ -41,13 +40,7 @@ public class TypingView extends PApplet {
 
 
     public TypingView (KeyboardView keyboard) {
-//        myLay = new BorderLayout();
-//        setLayout(myLay);
-//        add(main_pane);
         this.keyboard = keyboard;
-//        keyboard.setLocation(WINDOWWIDTH/6, WINDOWHEIGHT/20);
-//        main_pane.add(keyboard,1);
-//        keyboard.init();
     }
 
     public void setup() {

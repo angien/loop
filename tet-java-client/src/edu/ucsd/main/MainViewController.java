@@ -123,6 +123,7 @@ public class MainViewController extends JFrame {
         if(!curr_embed.equals("none")){
             if(curr_embed.equals("keyboard")) {
                 kb_embed.noLoop();
+                keyboard.noLoop();
                 main_pane.remove(kb_embed);
                 main_pane.remove(keyboard);
             }else if(curr_embed.equals("profile")){
@@ -155,7 +156,7 @@ public class MainViewController extends JFrame {
         SwingUtilities.invokeLater(new Runnable(){
             @Override
             public void run(){
-                new DatabaseConnect();
+//                new DatabaseConnect();
                 new MainViewController();
             }
        });

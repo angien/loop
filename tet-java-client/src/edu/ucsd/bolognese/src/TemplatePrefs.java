@@ -8,10 +8,11 @@ import java.awt.*;
 public class TemplatePrefs {
   public static final int DEFAULT_BACKGROUND = 50;
   public static final int DEFAULT_WRITE_COLOR = new Color(11, 72, 107).getRGB();
-  public static final int TURQUOISE = new Color(59, 134, 134).getRGB();
+  public static final int TURQUOISE = new Color(87, 186, 225).getRGB();
+  public static final int LIGHTGREEN = new Color(116, 205, 178).getRGB();
   public static final int LIME = new Color(121, 189, 154).getRGB();
   public static final int DEFAULT_BACK_COLOR = new Color(115, 99, 87).getRGB();
-  public static final int DEFAULT_BUTTON_SELECTED = new Color(224, 228, 204).getRGB();
+  public static final int DEFAULT_BUTTON_SELECTED = new Color(35, 243, 255).getRGB();
 
   // dynamic window size
   static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
