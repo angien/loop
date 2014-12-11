@@ -7,8 +7,6 @@ import processing.core.PFont;
 import processing.core.PImage;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.text.StyledEditorKit;
 import java.awt.*;
 
 /**
@@ -37,7 +35,6 @@ public class TypingView extends PApplet {
     int backColor, highlight;
     PImage profPic, backImg;
     PFont f;
-
 
     public TypingView (KeyboardView keyboard) {
         this.keyboard = keyboard;
@@ -68,9 +65,11 @@ public class TypingView extends PApplet {
 
         if (overBack(ZERO, BACKY, BACKWIDTH, BACKHEIGHT)) backColor = highlight;
 
-        //TEXT TO SPeak
+        //TEXT TO Speak
         if (keyboard.getDone()) {
-//            Runtime.getRuntime().exec();
+              FreeTTS freeTTS = new FreeTTS(keyboard.getPrevMessage());
+              freeTTS.speak();
+              keyboard.setDone(false);
         }
 
         // buttons

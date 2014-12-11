@@ -2,11 +2,9 @@ package edu.ucsd.marinara;
 
 import edu.ucsd.bolognese.src.TemplatePrefs;
 import edu.ucsd.main.DatabaseConnect;
-import processing.core.*;
+import processing.core.PApplet;
 
 import java.awt.*;
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.Statement;
 
 /*
@@ -63,6 +61,7 @@ public class KeyboardView extends PApplet {
     private static final char[] q4_neg_char = new char[]{'o', 'u', 'v', 'w'};
 
     private String currentMessage = "";
+    private String prevMessage = "";
     private boolean done = false;
     private int uid;
 
@@ -571,7 +570,6 @@ public class KeyboardView extends PApplet {
    * Called when the Done option is selected. Will handle the completed message accordingly.
    */
     private void doneSelected() {
-      // TODO: Do something with the current message(i.e. send back to containing view to handle)
       System.out.println("\nCompleted Message: " + currentMessage);
         try {
             Statement stmt = DatabaseConnect.conn.createStatement();
@@ -582,8 +580,9 @@ public class KeyboardView extends PApplet {
         catch (Exception e) {
             System.out.println("Something broke lol: " + e.toString());
         }
-      currentMessage = "";
-      done = true;
+        prevMessage = currentMessage;
+        currentMessage = "";
+        done = true;
     }
 
   /**
@@ -593,14 +592,19 @@ public class KeyboardView extends PApplet {
       currentMessage += ' ';
     }
 
-    public String getCurrentMessage()
-    {
+    public String getPrevMessage() {
+        return this.prevMessage;
+    }
 
+    public String getCurrentMessage() {
         return this.currentMessage;
     }
 
-    public boolean getDone()
-    {
+    public boolean getDone() {
         return done;
+    }
+
+    public void setDone(Boolean val){
+        done = val;
     }
 } // end class
