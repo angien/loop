@@ -11,7 +11,7 @@ import java.util.ArrayList;
 /**
  * Created by ryanliao on 12/1/14.
  */
-public class ContactsView extends PApplet {
+public class ContactsView extends LoopApplet {
     PFont f;
 
     ArrayList<String> prof_names;

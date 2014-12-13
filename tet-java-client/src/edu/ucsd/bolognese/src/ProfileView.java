@@ -4,6 +4,7 @@ import com.sun.org.apache.xalan.internal.xsltc.compiler.Template;
 import edu.ucsd.main.DatabaseConnect;
 import edu.ucsd.main.MainViewController;
 import edu.ucsd.marinara.KeyboardView;
+import edu.ucsd.main.LoopApplet;
 import processing.core.*;
 
 import java.sql.ResultSet;
@@ -11,7 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class ProfileView extends PApplet {
+public class ProfileView extends LoopApplet {
     static final int WINDOWWIDTH  = TemplatePrefs.WINDOWWIDTH;
     static final int WINDOWHEIGHT = TemplatePrefs.WINDOWHEIGHT;
     static final int IMGPOS       = 40;

@@ -18,10 +18,10 @@ import java.sql.SQLException;
  */
 public class MainViewController extends JFrame {
 
-    static PApplet kb_embed;
-    static PApplet home_embed;
-    static PApplet prof_embed;
-    static PApplet cont_embed;
+    static LoopApplet kb_embed;
+    static LoopApplet home_embed;
+    static LoopApplet prof_embed;
+    static LoopApplet cont_embed;
 
     static JLayeredPane main_pane;
     static JFrame main_frame;
@@ -162,6 +162,20 @@ public class MainViewController extends JFrame {
        });
     }
 
+    public static void mousePressed() {
+        if (curr_embed == null) {
+          return;
+        }
 
+        if (curr_embed.equals("home")) {
+            home_embed.mousePressed();
+        } else if (curr_embed.equals("keyboard")) {
+            kb_embed.mousePressed();
+        } else if (curr_embed.equals("contacts")) {
+            cont_embed.mousePressed();
+        } else if (curr_embed.equals("profile")) {
+            prof_embed.mousePressed();
+        }
+    }
 
 }

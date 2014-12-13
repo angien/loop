@@ -2,6 +2,7 @@ package edu.ucsd.marinara;
 
 import edu.ucsd.bolognese.src.TemplatePrefs;
 import edu.ucsd.main.DatabaseConnect;
+import edu.ucsd.main.LoopApplet;
 import processing.core.PApplet;
 
 import java.awt.*;
@@ -12,7 +13,7 @@ import java.sql.Statement;
  * TODO: bottom in itself should be a new
  */
 
-public class KeyboardView extends PApplet {
+public class KeyboardView extends LoopApplet {
 
     // Get current screen size, take out later
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -332,69 +333,63 @@ public class KeyboardView extends PApplet {
         background(TemplatePrefs.DEFAULT_BACKGROUND);
         drawDefaultWindow();
 
-        if (mousePressed) {
-            // when moving quadrants, mouse changes before pmouse
-            // mouse is start, pmouse is end
-            int new_q = getCurrQuadrant(pmouseX, pmouseY);
-            highlightQuadrant(new_q);
+        // when moving quadrants, mouse changes before pmouse
+        // mouse is start, pmouse is end
+        int new_q = getCurrQuadrant(pmouseX, pmouseY);
+        highlightQuadrant(new_q);
 
-            // if mouse enters/is in quadrant
-            strokeWeight(3);
-            stroke(lineColor); // TODO: FIX THIS!!!!!!!!!
-            line(mouseX, mouseY, pmouseX, pmouseY);
+        // if mouse enters/is in quadrant
+        strokeWeight(3);
+        stroke(lineColor); // TODO: FIX THIS!!!!!!!!!
+        line(mouseX, mouseY, pmouseX, pmouseY);
 
-            if (branch_count < 7)
+        if (branch_count < 7)
+        {
+            // started
+            if(branch_count == 0)
             {
-                // started
-                if(branch_count == 0)
-                {
-                    if (new_q == 0)
-                        lineColor = TemplatePrefs.VALID_INPUT_COLOR;
-                    else {
-                        lineColor = TemplatePrefs.INVALID_INPUT_COLOR;
-                    }
-
-                    crossed_q[branch_count] = new_q;
-                    branch_count++;
-                    prev_q = new_q;
-                    //System.out.println("started at quadrant: " + Integer.toString(new_q));
-
+                if (new_q == 0)
+                    lineColor = TemplatePrefs.VALID_INPUT_COLOR;
+                else {
+                    lineColor = TemplatePrefs.INVALID_INPUT_COLOR;
                 }
-                if (new_q != prev_q) // changed quadrant area
-                {
-                    //System.out.println("crossed branch from: " + Integer.toString(prev_q) + " to " + Integer.toString(new_q));
-                    prev_q = new_q;
-                    crossed_q[branch_count] = new_q;
-                    branch_count++;
-                }
-            }
-            else {
-                resetAllValues();
-            }
 
-            if(branch_count > 2 && branch_count < 7 && getCurrQuadrant(mouseX, mouseY) == 0) // check that loop is valid
+                crossed_q[branch_count] = new_q;
+                branch_count++;
+                prev_q = new_q;
+                //System.out.println("started at quadrant: " + Integer.toString(new_q));
+
+            }
+            if (new_q != prev_q) // changed quadrant area
             {
-                //System.out.println("mouse released, the starting point is: " + Integer.toString(crossed_q[0]));
-                //System.out.println("the size is: " + Integer.toString(branch_count));
-                if(crossed_q[0] == 0) {
-
-                    // crossed_q[1] should be when 0 moves to something else
-                    // - 3 because : start point, start point's next point, and  end point dont count
-
-                    if (!callNonLetterOption(crossed_q[1], getDirection(crossed_q[1], crossed_q[2]))) {
-                      char text = getQChar(crossed_q[1], getDirection(crossed_q[1], crossed_q[2]), branch_count - 3);
-                      System.out.print(text);
-                      done = false;
-                      currentMessage += text;
-                    }
-                }
-                resetAllValues();
-
+                //System.out.println("crossed branch from: " + Integer.toString(prev_q) + " to " + Integer.toString(new_q));
+                prev_q = new_q;
+                crossed_q[branch_count] = new_q;
+                branch_count++;
             }
         }
-        else // mouse released
-        {
+        else {
             resetAllValues();
+        }
+
+        if(branch_count > 2 && branch_count < 7 && getCurrQuadrant(mouseX, mouseY) == 0) // check that loop is valid
+        {
+            //System.out.println("mouse released, the starting point is: " + Integer.toString(crossed_q[0]));
+            //System.out.println("the size is: " + Integer.toString(branch_count));
+            if(crossed_q[0] == 0) {
+
+                // crossed_q[1] should be when 0 moves to something else
+                // - 3 because : start point, start point's next point, and  end point dont count
+
+                if (!callNonLetterOption(crossed_q[1], getDirection(crossed_q[1], crossed_q[2]))) {
+                  char text = getQChar(crossed_q[1], getDirection(crossed_q[1], crossed_q[2]), branch_count - 3);
+                  System.out.print(text);
+                  done = false;
+                  currentMessage += text;
+                }
+            }
+            resetAllValues();
+
         }
     } // end draw
 

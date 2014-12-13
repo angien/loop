@@ -5,6 +5,7 @@ import edu.ucsd.marinara.KeyboardView;
 import processing.core.PApplet;
 import processing.core.PFont;
 import processing.core.PImage;
+import edu.ucsd.main.LoopApplet;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +13,7 @@ import java.awt.*;
 /**
  * Created by justinhung on 11/20/14.
  */
-public class TypingView extends PApplet {
+public class TypingView extends LoopApplet {
     static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     static double width = screenSize.getWidth();
     static double height = screenSize.getHeight();

@@ -3,12 +3,13 @@ package edu.ucsd.bolognese.src;
 import com.sun.corba.se.spi.ior.IORTemplateList;
 import edu.ucsd.main.MainViewController;
 import edu.ucsd.marinara.KeyboardView;
+import edu.ucsd.main.LoopApplet;
 import processing.core.*;
 
 /**
  * Created by karenlo on 11/24/14.
  */
-public class HomePage extends PApplet {
+public class HomePage extends LoopApplet {
 
     //title icon
     static int TITLEHEIGH = 204;
