@@ -174,7 +174,42 @@ public class
 
     public void draw() {
 
-        noLoop();
+        if(!backPressed(mouseX, mouseY)){
+            // back button
+            noStroke();
+            fill(TemplatePrefs.DEFAULT_BACK_COLOR);
+            rect(back_btn_start_x, back_btn_start_y, back_btn_width, back_btn_height);
+
+            // back button icon
+            PImage back_icon_img = loadImage("back.png");
+            image(back_icon_img, back_btn_start_x + 5, back_btn_start_y, (int)(back_btn_width * 0.25), back_btn_height - 30);
+
+            fill(255, 255, 255); //fill(TemplatePrefs.DEFAULT_WRITE_COLOR);
+            text("Back", back_btn_start_x + 100, back_btn_start_y + 50);
+            //noFill();
+
+
+            //noLoop();
+        } else{
+            // back button
+            noStroke();
+            fill(TemplatePrefs.DEFAULT_BUTTON_SELECTED);
+            rect(back_btn_start_x, back_btn_start_y, back_btn_width, back_btn_height);
+
+            // back button icon
+            PImage back_icon_img = loadImage("back.png");
+            image(back_icon_img, back_btn_start_x + 5, back_btn_start_y, (int)(back_btn_width * 0.25), back_btn_height - 30);
+
+            fill(255, 255, 255); //fill(TemplatePrefs.DEFAULT_WRITE_COLOR);
+            text("Back", back_btn_start_x + 100, back_btn_start_y + 50);
+            //noFill();
+
+
+            //noLoop();
+        }
+
+        loop();
+
     }
 
     public int getProfileClicked(){
