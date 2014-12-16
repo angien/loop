@@ -40,8 +40,8 @@ public class
     private boolean exit_pressed = false;
     static boolean next_pressed = false;
 
-    static int back_btn_height = 130; //(int)(view_height * 0.2);
-    static int back_btn_width = 200; //(int)(btn_col_x - (2 * margin_width));
+    static int back_btn_height = 100; //(int)(view_height * 0.2);
+    static int back_btn_width = 300; //(int)(btn_col_x - (2 * margin_width));
     static int back_btn_start_x = 0 + margin_width;
     static int back_btn_start_y = view_height - (2* margin_height) - (2*back_btn_height);
 
@@ -98,8 +98,12 @@ public class
         stroke(0);
         line(btn_col_x, mid_line_y, view_width, mid_line_y); // top-bot separator
 
+        noStroke();
+        fill(TemplatePrefs.LIGHTGREEN);
+        ellipse(159, 168, (int)(btn_col_x / 1.5), (int)(mid_line_y/ 1.5));
+
         PImage chat_icon_img = loadImage("chat.png");
-        image(chat_icon_img, margin_width + 20, margin_height * 3, btn_col_x /2, mid_line_y /2);
+        image(chat_icon_img, margin_width + 30, 60, btn_col_x /2, mid_line_y /2);
 
 
         // back button
@@ -212,6 +216,7 @@ public class
     }
 
     public void mousePressed(){
+        System.out.println("clicked: " + Integer.toString(mouseX) + " " + Integer.toString(mouseY));
         if(backPressed(mouseX, mouseY)){
             exit_pressed = true;
             MainViewController.removeTopEmbed();
