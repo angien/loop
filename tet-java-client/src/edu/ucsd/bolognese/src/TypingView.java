@@ -83,7 +83,9 @@ public class TypingView extends LoopApplet {
 
     public void mousePressed() {
         if (overBack(ZERO, BACKY, BACKWIDTH, BACKHEIGHT)) {
-            MainViewController.removeTopEmbed("keyboard");
+            // Remove twice since keyboard consists of TypingView and KeyboardView
+            MainViewController.removeTopEmbed();
+            MainViewController.removeTopEmbed();
             System.out.println("back pressed");
         }
     }

@@ -5,20 +5,16 @@ import edu.ucsd.bolognese.src.ProfileView;
 import edu.ucsd.bolognese.src.TemplatePrefs;
 import edu.ucsd.bolognese.src.TypingView;
 import edu.ucsd.marinara.KeyboardView;
-import processing.core.PApplet;
 import processing.core.PImage;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
-import java.sql.SQLException;
 
 /**
  * Created by ryanliao on 11/30/14.
  */
 public class MainViewController extends JFrame {
 
-    static LoopApplet kb_embed;
     static LoopApplet home_embed;
     static LoopApplet prof_embed;
     static LoopApplet cont_embed;
@@ -26,23 +22,14 @@ public class MainViewController extends JFrame {
     static JLayeredPane main_pane;
     static JFrame main_frame;
 
-    static String curr_embed = "none";
-    static String prev_embed = "none";
-
-    static KeyboardView keyboard;
-
     // general flow of PApplet: new() -> pane.add(...) -> init() -> noLoop()
     public MainViewController() {
         super("Embedded PApplet");
         setSize(TemplatePrefs.WINDOWWIDTH, TemplatePrefs.WINDOWHEIGHT);
-        setTitle("Spaghetti App");
+        setTitle("Loop");
 
         main_frame = this;
         main_pane = new JLayeredPane();
-
-        prev_embed = "none";
-        curr_embed = "none";
-
 
         showHome();
 
@@ -50,141 +37,91 @@ public class MainViewController extends JFrame {
     }
 
     public static void showHome(){
-        if(!curr_embed.equals("home")) {
-            if (home_embed == null) {
-                home_embed = new HomePage();
-                home_embed.init();
-            }
-            noLoopAll();
-            home_embed.resetTimedClick();
-            home_embed.loop();
-            home_embed.setLocation(0, 0);
-            main_pane.add(home_embed, 1, 0);
-            curr_embed = "home";
+        HomePage home_embed = new HomePage();
+        home_embed.init();
 
-            main_frame.setVisible(true);
-        }
+        home_embed.resetTimedClick();
+        home_embed.loop();
+        home_embed.setLocation(0, 0);
+        main_pane.add(home_embed, 0);
+
+        main_frame.setVisible(true);
     }
 
     public static void showKeyboard(int uid){
-        if(!curr_embed.equals("keyboard")) {
-            if (keyboard == null && kb_embed == null) {
-                keyboard = new KeyboardView(uid);
-                kb_embed = new TypingView(keyboard);
+        KeyboardView keyboard = new KeyboardView(uid);
+        TypingView kb_embed = new TypingView(keyboard);
 
-                kb_embed.init();
-                keyboard.init();
-            }
+        kb_embed.init();
+        keyboard.init();
 
-            noLoopAll();
-            kb_embed.resetTimedClick();
-            kb_embed.loop();
+        kb_embed.resetTimedClick();
+        kb_embed.loop();
 
-            kb_embed.setLocation(0, 0);
-            keyboard.setLocation(TemplatePrefs.WINDOWWIDTH/6, TemplatePrefs.WINDOWHEIGHT/20);
+        kb_embed.setLocation(0, 0);
+        keyboard.setLocation(TemplatePrefs.WINDOWWIDTH/6, TemplatePrefs.WINDOWHEIGHT/20);
 
-            main_pane.add(kb_embed, 1, 0);
-            main_pane.add(keyboard, 2, 0);
-            curr_embed = "keyboard";
+        pauseTopEmbed();
+        main_pane.add(kb_embed, 0);
+        main_pane.add(keyboard, 0);
 
-            main_frame.setVisible(true);
-        }
+        main_frame.setVisible(true);
     }
 
     public static void showContacts(){
-        if(!curr_embed.equals("contacts")) {
-            if (cont_embed == null) {
-                cont_embed = new ContactsView();
-                cont_embed.init();
-            }
-            noLoopAll();
-            cont_embed.resetTimedClick();
-            cont_embed.loop();
-            cont_embed.setLocation(0, 0);
-            main_pane.add(cont_embed, 1, 0);
-            curr_embed = "contacts";
+        ContactsView cont_embed = new ContactsView();
+        cont_embed.init();
 
-            main_frame.setVisible(true);
-        }
+        cont_embed.resetTimedClick();
+        cont_embed.loop();
+        cont_embed.setLocation(0, 0);
+
+        pauseTopEmbed();
+        main_pane.add(cont_embed, 0);
+
+        main_frame.setVisible(true);
     }
 
     public static void showProfile(PImage img, String name, int uid){
-        if(!curr_embed.equals("profile")){
-            prof_embed = new ProfileView(img, name, uid);
-            prof_embed.init();
-            noLoopAll();
-            prof_embed.resetTimedClick();
-            prof_embed.loop();
-            System.out.println("Profile name: " + name);
-            prof_embed.setLocation(0, 0);
-            main_pane.add(prof_embed, 2, 0);
-            curr_embed = "profile";
+        ProfileView prof_embed = new ProfileView(img, name, uid);
+        prof_embed.init();
+        prof_embed.resetTimedClick();
+        prof_embed.loop();
+        System.out.println("Profile name: " + name);
+        prof_embed.setLocation(0, 0);
 
-            main_frame.setVisible(true);
+        pauseTopEmbed();
+        main_pane.add(prof_embed, 0);
+
+        main_frame.setVisible(true);
+    }
+
+    public static void pauseTopEmbed() {
+        int numComponents = main_pane.getComponentCount();
+        if (numComponents > 0) {
+            LoopApplet loopApplet = (LoopApplet) main_pane.getComponent(0);
+            loopApplet.resetTimedClick();
+            loopApplet.noLoop();
         }
     }
 
-    public static void showMail(){
-        return;
-        /*if(!curr_embed.equals("mail")) {
-            prev_embed = curr_embed;
-            curr_embed = "mail";
+    public static void removeTopEmbed(){
+        int numComponents = main_pane.getComponentCount();
+        if (numComponents <= 0) {
+            return;
         }
 
-        main_frame.setVisible(true);*/
-    }
+        LoopApplet loopApplet = (LoopApplet) main_pane.getComponent(0);
+        loopApplet.noLoop();
+        main_pane.remove(0);
 
-    public static void noLoopAll() {
-        if (home_embed != null) {
-            home_embed.noLoop();
-        }
-
-        if (prof_embed != null) {
-            prof_embed.noLoop();
-        }
-
-        if (kb_embed != null) {
-            kb_embed.noLoop();
-        }
-
-        if (cont_embed != null) {
-            cont_embed.noLoop();
+        // Check if there are still any left after removing
+        if (numComponents - 2 >= 0 ) {
+            loopApplet = (LoopApplet) main_pane.getComponent(0);
+            loopApplet.resetTimedClick();
+            loopApplet.loop();
         }
     }
-
-    public static void removeTopEmbed(String top_embed){
-        if(!curr_embed.equals("none")){
-            if(curr_embed.equals("keyboard")) {
-                kb_embed.noLoop();
-                keyboard.noLoop();
-                main_pane.remove(kb_embed);
-                main_pane.remove(keyboard);
-            }else if(curr_embed.equals("profile")){
-                prof_embed.noLoop();
-                main_pane.remove(prof_embed);
-            }else if(curr_embed.equals("contacts")){
-                cont_embed.noLoop();
-                main_pane.removeAll();
-                showHome();
-
-            }else{
-                System.out.println("Error: no view to remove");
-                return;
-            }
-
-            home_embed.resetTimedClick();
-            curr_embed = "none";
-        }
-    }
-
-    // Justin: would need this if we need to get back to the previous state that's not necesary the homepage
-    // Ryan: I agree, and i think the easiest way is to put the views order in a stack, and just repopulate the
-    //       previous view when gone back...caching the view is weird and I am having hard time with it so far, so I
-    //       changed it just destroying and recreating view. Not that slow, more mem efficient, just slow startup
-    public static void returnToPreviousState() {
-
-    }
-
 
     public static void main(String[] args){
 
@@ -197,22 +134,14 @@ public class MainViewController extends JFrame {
        });
     }
 
-    public static void mousePressed() {
-        if (curr_embed == null) {
-          return;
+    /**
+     * Used for debugging purposes. Prints out the components currently on the main pane
+     */
+    private static void printMainPane() {
+        System.out.println("*****PRINTING COMPONENTS*****");
+        for(Component c :main_pane.getComponents()) {
+            System.out.println(c.getClass().getName());
         }
-
-        System.out.print("Clicking for " + curr_embed + "\n");
-
-        if (curr_embed.equals("home")) {
-            home_embed.mousePressed();
-        } else if (curr_embed.equals("keyboard")) {
-            kb_embed.mousePressed();
-        } else if (curr_embed.equals("contacts")) {
-            cont_embed.mousePressed();
-        } else if (curr_embed.equals("profile")) {
-            prof_embed.mousePressed();
-        }
+        System.out.println("***************************");
     }
-
 }

@@ -185,13 +185,11 @@ public class ContactsView extends LoopApplet {
     public void mousePressed(){
         if(inCircle(mouseX, mouseY, 0, mid_line_y, (exit_circle_radius / 2))){
             exit_pressed = true;
-            MainViewController.removeTopEmbed("contacts");
+            MainViewController.removeTopEmbed();
         }else {
             exit_pressed = false;
-//            redraw();
             int prof_index = getProfileClicked() * (curr_page_index + 1);
             if(prof_images.get(prof_index) != null && prof_names.get(prof_index) != null){
-                MainViewController.removeTopEmbed("contacts");
                 MainViewController.showProfile(prof_images.get(prof_index), prof_names.get(prof_index), prof_index);
             }
         }

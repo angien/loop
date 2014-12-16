@@ -64,7 +64,6 @@ public class HomePage extends LoopApplet {
     }
 
     public void draw() {
-        System.out.println("Drawing");
         keyboardColor = contactsColor = mailColor = TemplatePrefs.TURQUOISE;
 
         //highlight keyboard
@@ -106,15 +105,10 @@ public class HomePage extends LoopApplet {
      */
     public void mousePressed() {
         if(overKeyboard(KEYBOARDX, KEYBOARDY, BUTTONWIDTH, BUTTONHEIGHT)) {
-            MainViewController.removeTopEmbed("keyboard");
             MainViewController.showKeyboard(-1);
-        }else if(overContacts(CONTACTSX, CONTACTSY, BUTTONWIDTH, BUTTONHEIGHT)){
-            MainViewController.removeTopEmbed("contacts");
+        } else if(overContacts(CONTACTSX, CONTACTSY, BUTTONWIDTH, BUTTONHEIGHT)){
             MainViewController.showContacts(); // CHANGE THIS TO showContacts() WHEN FINISEHD
-        }else if(overMail(MAILX, MAILY, BUTTONWIDTH, BUTTONHEIGHT)){
-            MainViewController.removeTopEmbed("mail");
-            MainViewController.showMail();
-        }else {
+        } else {
             System.out.println("mousePressed on something else");
         }
     }

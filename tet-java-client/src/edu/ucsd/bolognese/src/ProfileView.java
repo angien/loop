@@ -139,7 +139,6 @@ public class ProfileView extends LoopApplet {
 
         if(overWrite(WRITEX, ZERO, RECTWIDTH, RECTHEIGHT)){
             try {
-                MainViewController.removeTopEmbed("profile");
                 MainViewController.showKeyboard(profID);
 
             } catch (Exception e) {
@@ -149,9 +148,7 @@ public class ProfileView extends LoopApplet {
 
         if(overBack(ZERO, BACKY, BACKWIDTH, BACKHEIGHT)){
             try {
-                MainViewController.removeTopEmbed("profile");
-                MainViewController.showContacts();
-
+                MainViewController.removeTopEmbed();
             } catch (Exception e) {
                 e.printStackTrace();
             }
