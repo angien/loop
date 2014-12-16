@@ -28,6 +28,10 @@ public class LoopApplet extends PApplet {
         super.handleMouseEvent(event);
 
         set_mouse_coordinates(event);
+
+        /**
+         * NOTE: Comment this out if you would like to turn off 2-second hover clicks
+         */
         clickIfNeeded();
     }
 
