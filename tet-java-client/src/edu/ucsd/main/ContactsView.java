@@ -40,8 +40,8 @@ public class
     private boolean exit_pressed = false;
     static boolean next_pressed = false;
 
-    static int back_btn_height = 70; //(int)(view_height * 0.2);
-    static int back_btn_width = 250; //(int)(btn_col_x - (2 * margin_width));
+    static int back_btn_height = 130; //(int)(view_height * 0.2);
+    static int back_btn_width = 200; //(int)(btn_col_x - (2 * margin_width));
     static int back_btn_start_x = 0 + margin_width;
     static int back_btn_start_y = view_height - (2* margin_height) - (2*back_btn_height);
 
@@ -98,8 +98,8 @@ public class
         stroke(0);
         line(btn_col_x, mid_line_y, view_width, mid_line_y); // top-bot separator
 
-        PImage chat_icon_img = loadImage("contacts.png");
-        image(chat_icon_img, 0, 0, btn_col_x, mid_line_y);
+        PImage chat_icon_img = loadImage("chat.png");
+        image(chat_icon_img, margin_width + 20, margin_height * 3, btn_col_x /2, mid_line_y /2);
 
 
         // back button
@@ -109,10 +109,12 @@ public class
 
         // back button icon
         PImage back_icon_img = loadImage("back.png");
-        image(back_icon_img, back_btn_start_x + 10, back_btn_start_y, (int)(back_btn_width * 0.25), back_btn_height);
+        image(back_icon_img, back_btn_start_x + 5, back_btn_start_y, (int)(back_btn_width * 0.25), back_btn_height - 30);
 
         fill(255, 255, 255); //fill(TemplatePrefs.DEFAULT_WRITE_COLOR);
         text("Back", back_btn_start_x + 100, back_btn_start_y + 50);
+        noFill();
+
 
         showImages(1);
 
