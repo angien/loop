@@ -128,24 +128,25 @@ public class ProfileView extends LoopApplet {
         /* NOTE: uncomment this to display messages from the database
          * Done in a super hacky way but should work.
          */
-//        for ( int i = 0; i < commonMessages.length; i++ ){
+       j = 300;
+        for ( int i = 0; i < commonMessages.length; i++ ){
+
+
+            text( commonMessages[i], 900 ,j );
+            messageMap.put(j-38, i);
+            j += 75;
+
+        }
+
+
+//        text(testMessage[0], 900, 300 );
+//        messageMap.put(300-38, 0);
+//        text(testMessage[1], 900, 375);
+//        messageMap.put(375-38, 1);
+//        text(testMessage[2], 900, 450 );
+//        messageMap.put(450-38, 2);
 //
-//            j = 300;
-//            text( commonMessages[i], 900 ,j );
-//            messageTracker.put(j, i);
-//            j += 75;
-//
-//        }
-
-
-        text(testMessage[0], 900, 300 );
-        messageMap.put(300-38, 0);
-        text(testMessage[1], 900, 375);
-        messageMap.put(375-38, 1);
-        text(testMessage[2], 900, 450 );
-        messageMap.put(450-38, 2);
-
-        j=450+75;
+//        j=450+75;
 
     }
 
@@ -178,7 +179,7 @@ public class ProfileView extends LoopApplet {
         if ( overMessage(700, 1100, 300-38, j) && !messageMap.isEmpty()) {
             System.out.println("ASDASDASDASDAASD" + mouseY);
             if (messageMap.containsKey(messageMap.floorKey(mouseY))){
-                FreeTTS freeTTS = new FreeTTS(testMessage[messageMap.get(messageMap.floorKey(mouseY))]);
+                FreeTTS freeTTS = new FreeTTS(commonMessages[messageMap.get(messageMap.floorKey(mouseY))]);
                 freeTTS.speak();
             }
 

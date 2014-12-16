@@ -158,7 +158,7 @@ public class MainViewController extends JFrame {
         SwingUtilities.invokeLater(new Runnable(){
             @Override
             public void run(){
-//                new DatabaseConnect();
+               new DatabaseConnect();
                 new MainViewController();
             }
        });
