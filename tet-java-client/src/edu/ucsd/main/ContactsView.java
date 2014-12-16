@@ -11,7 +11,8 @@ import java.util.ArrayList;
 /**
  * Created by ryanliao on 12/1/14.
  */
-public class ContactsView extends LoopApplet {
+public class
+        ContactsView extends LoopApplet {
     PFont f;
 
     ArrayList<String> prof_names;
@@ -21,13 +22,16 @@ public class ContactsView extends LoopApplet {
     static int view_width = (int)(TemplatePrefs.WINDOWWIDTH);
     static int view_height = (int)(TemplatePrefs.WINDOWHEIGHT);
 
-    static int mid_col_x = (int)(view_width / 3);
-    static int right_col_x = (int)(view_width * 2 / 3);
+    static int btn_col_x = (int)(view_width / 4);
+    static int mid_col_x = (int)(view_width * 2 / 4);
+    static int right_col_x = (int)(view_width * 3 / 4);
     static int mid_line_y = (view_height / 2) - 20; // FIX THIS...20 is temporary
     static int margin_x = (int)(mid_col_x * 0.125);
     static int margin_y = (int)(mid_line_y * 0.1);
+    static int margin_width = (int)(view_width * 0.025);
+    static int margin_height = (int)(view_height * 0.010);
 
-    static int image_width = mid_col_x - (2 * margin_x);
+    static int image_width = btn_col_x - (margin_x);
     static int image_height = (int)(mid_line_y * 0.75) - margin_y;
 
     static int total_contacts = 8;
@@ -35,6 +39,12 @@ public class ContactsView extends LoopApplet {
     static int last_page_index = total_contacts / 6;
     private boolean exit_pressed = false;
     static boolean next_pressed = false;
+
+    static int back_btn_height = 70; //(int)(view_height * 0.2);
+    static int back_btn_width = 250; //(int)(btn_col_x - (2 * margin_width));
+    static int back_btn_start_x = 0 + margin_width;
+    static int back_btn_start_y = view_height - (2* margin_height) - (2*back_btn_height);
+
 
     static Timer exit_timer;
     public void testcase(){
@@ -79,15 +89,31 @@ public class ContactsView extends LoopApplet {
 
 
         strokeWeight(3);
+        stroke(0);
+        line(btn_col_x, 0, btn_col_x, view_height); // most left column for button
         stroke(0); // black
         line(mid_col_x, 0, mid_col_x, view_height); // left-mid separator
         stroke(0);
         line(right_col_x, 0, right_col_x, view_height); // mid-right separator
         stroke(0);
-        line(0, mid_line_y, view_width, mid_line_y); // top-bot separator
+        line(btn_col_x, mid_line_y, view_width, mid_line_y); // top-bot separator
 
-        noFill();
-        arc(0, mid_line_y, exit_circle_radius, exit_circle_radius, radians(0), radians(360));
+        PImage chat_icon_img = loadImage("contacts.png");
+        image(chat_icon_img, 0, 0, btn_col_x, mid_line_y);
+
+
+        // back button
+        noStroke();
+        fill(TemplatePrefs.DEFAULT_BACK_COLOR);
+        rect(back_btn_start_x, back_btn_start_y, back_btn_width, back_btn_height);
+
+        // back button icon
+        PImage back_icon_img = loadImage("back.png");
+        image(back_icon_img, back_btn_start_x + 10, back_btn_start_y, (int)(back_btn_width * 0.25), back_btn_height);
+
+        fill(TemplatePrefs.DEFAULT_WRITE_COLOR);
+        //textFont(createFont("Arial", 40, true));
+        text("Back", back_btn_start_x + 100, back_btn_start_y + 50);
 
         showImages(1);
 
@@ -106,33 +132,34 @@ public class ContactsView extends LoopApplet {
         }
     }
 
-    // 0, 1, 2
-    // 3, 4, 5
+    // img, 0, 1, 2
+    // btn, 3, 4, 5
     public void drawOnBox(int box_num, PImage img, String name){
+        fill(255);
         switch(box_num){
             case 0:
-                image(img, margin_x, margin_y,  image_width , image_height);
-                text(name, margin_x, mid_line_y - margin_y);
+                image(img, btn_col_x + margin_width, margin_y,  image_width , image_height);
+                text(name, btn_col_x + margin_width, mid_line_y - margin_y);
                 break;
             case 1:
-                image(img, mid_col_x + margin_x, margin_y, image_width, image_height);
-                text(name, mid_col_x + margin_x, mid_line_y - margin_y);
+                image(img, mid_col_x + margin_width, margin_y, image_width, image_height);
+                text(name, mid_col_x + margin_width, mid_line_y - margin_y);
                 break;
             case 2:
-                image(img, right_col_x + margin_x, margin_y, image_width, image_height);
-                text(name, right_col_x + margin_x, mid_line_y - margin_y);
+                image(img, right_col_x + margin_width, margin_y, image_width, image_height);
+                text(name, right_col_x + margin_width, mid_line_y - margin_y);
                 break;
             case 3:
-                image(img, margin_x, mid_line_y + margin_y, image_width, image_height);
-                text(name, margin_x, TemplatePrefs.WINDOWHEIGHT - margin_y * 2); // NEED TO FIX Y-AXIS OF TEXT...CASE 3 4 5
+                image(img, btn_col_x + margin_width, mid_line_y + margin_y, image_width, image_height);
+                text(name, btn_col_x + margin_width, TemplatePrefs.WINDOWHEIGHT - margin_y * 2); // NEED TO FIX Y-AXIS OF TEXT...CASE 3 4 5
                 break;
             case 4:
-                image(img, mid_col_x + margin_x, mid_line_y + margin_y, image_width, image_height);
-                text(name, mid_col_x + margin_x, TemplatePrefs.WINDOWHEIGHT - margin_y * 2);
+                image(img, mid_col_x + margin_width, mid_line_y + margin_y, image_width, image_height);
+                text(name, mid_col_x + margin_width, TemplatePrefs.WINDOWHEIGHT - margin_y * 2);
                 break;
             case 5:
-                image(img, right_col_x + margin_x, mid_line_y + margin_y, image_width, image_height);
-                text(name, right_col_x + margin_x, TemplatePrefs.WINDOWHEIGHT - margin_y * 2);
+                image(img, right_col_x + margin_width, mid_line_y + margin_y, image_width, image_height);
+                text(name, right_col_x + margin_width, TemplatePrefs.WINDOWHEIGHT - margin_y * 2);
                 break;
             default:
                 System.out.println("Error: Black Magic Detected");
@@ -141,30 +168,22 @@ public class ContactsView extends LoopApplet {
 
     public void draw() {
 
-        if(exit_pressed){
-            fill(255, 0, 0);
-            arc(0, mid_line_y, exit_circle_radius, exit_circle_radius, radians(0), radians(360));
-        }else{
-            fill(255, 255, 255);
-            arc(0, mid_line_y, exit_circle_radius, exit_circle_radius, radians(0), radians(360));
-        }
-
         noLoop();
     }
 
     public int getProfileClicked(){
-        if(mouseY < mid_line_y && mouseX > 0){
-            if(mouseX < mid_col_x){
+        if(mouseY < mid_line_y && mouseX > btn_col_x && mouseX < view_width){
+            if(mouseX > btn_col_x && mouseX < mid_col_x){
                 return 0;
             }else if(mouseX > mid_col_x && mouseX < right_col_x){
                 return 1;
             }else{
                 return 2;
             }
-        }else if(mouseX > 0){
-            if(mouseX > 0 && mouseX < mid_col_x){
+        }else if(mouseY > mid_line_y && mouseX > btn_col_x && mouseX < view_width ){
+            if(mouseX > btn_col_x && mouseX < mid_col_x){
                 return 3;
-            } else if(mouseX > mid_col_x && mouseX < right_col_x) {
+            } else if(mouseX > mid_col_x && mouseX < right_col_x){
                 return 4;
             } else{
                 return 5;
@@ -182,15 +201,28 @@ public class ContactsView extends LoopApplet {
         return false;
     }
 
+    public boolean backPressed(int mouse_x, int mouse_y){
+        if(mouse_x > back_btn_start_x && mouse_y > back_btn_start_y &&
+                mouse_x < (back_btn_start_x + back_btn_width) && mouse_y < (back_btn_start_y + back_btn_height)){
+            return true;
+        }
+        return false;
+    }
+
     public void mousePressed(){
-        if(inCircle(mouseX, mouseY, 0, mid_line_y, (exit_circle_radius / 2))){
+        System.out.println("clicked on: {" + Integer.toString(mouseX) + ", " + Integer.toString(mouseY) + "}");
+        if(backPressed(mouseX, mouseY)){
             exit_pressed = true;
             MainViewController.removeTopEmbed();
         }else {
             exit_pressed = false;
             int prof_index = getProfileClicked() * (curr_page_index + 1);
-            if(prof_images.get(prof_index) != null && prof_names.get(prof_index) != null){
-                MainViewController.showProfile(prof_images.get(prof_index), prof_names.get(prof_index), prof_index);
+            if(prof_index >= 0 && prof_index < 6){
+                if(prof_images.get(prof_index) != null && prof_names.get(prof_index) != null){
+                    MainViewController.showProfile(prof_images.get(prof_index), prof_names.get(prof_index), prof_index);
+                }
+            } else{
+                System.out.println("clicked neither the profile nor the back button");
             }
         }
     }

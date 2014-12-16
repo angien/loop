@@ -103,8 +103,11 @@ public class ProfileView extends LoopApplet {
         noStroke();
         rect(ADDX, ZERO, RECTWIDTH, RECTHEIGHT);
         fill(deleteColor);
+
+        // back button
         noStroke();
         rect(DELETEX, ZERO, RECTWIDTH, RECTHEIGHT);
+
         fill(backColor);
         noStroke();
         rect(ZERO, BACKY, BACKWIDTH, BACKHEIGHT);
