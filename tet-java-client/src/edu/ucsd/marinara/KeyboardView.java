@@ -602,4 +602,14 @@ public class KeyboardView extends LoopApplet {
     public void setDone(Boolean val){
         done = val;
     }
+
+    @Override
+    protected int getXPositionOffset() {
+        return TemplatePrefs.WINDOWWIDTH/6;
+    }
+
+    @Override
+    protected int getYPositionOffset() {
+        return TemplatePrefs.WINDOWHEIGHT/9;
+    }
 } // end class
