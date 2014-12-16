@@ -64,7 +64,7 @@ public class HomePage extends LoopApplet {
     }
 
     public void draw() {
-
+        System.out.println("Drawing");
         keyboardColor = contactsColor = mailColor = TemplatePrefs.TURQUOISE;
 
         //highlight keyboard

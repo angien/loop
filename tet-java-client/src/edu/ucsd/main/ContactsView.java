@@ -188,7 +188,7 @@ public class ContactsView extends LoopApplet {
             MainViewController.removeTopEmbed("contacts");
         }else {
             exit_pressed = false;
-            redraw();
+//            redraw();
             int prof_index = getProfileClicked() * (curr_page_index + 1);
             if(prof_images.get(prof_index) != null && prof_names.get(prof_index) != null){
                 MainViewController.removeTopEmbed("contacts");

@@ -51,8 +51,12 @@ public class MainViewController extends JFrame {
 
     public static void showHome(){
         if(!curr_embed.equals("home")) {
-            home_embed = new HomePage();
-            home_embed.init();
+            if (home_embed == null) {
+                home_embed = new HomePage();
+                home_embed.init();
+            }
+            noLoopAll();
+            home_embed.resetTimedClick();
             home_embed.loop();
             home_embed.setLocation(0, 0);
             main_pane.add(home_embed, 1, 0);
@@ -64,12 +68,16 @@ public class MainViewController extends JFrame {
 
     public static void showKeyboard(int uid){
         if(!curr_embed.equals("keyboard")) {
-            keyboard = new KeyboardView(uid);
-            kb_embed = new TypingView(keyboard);
+            if (keyboard == null && kb_embed == null) {
+                keyboard = new KeyboardView(uid);
+                kb_embed = new TypingView(keyboard);
 
-            kb_embed.init();
-            keyboard.init();
-            
+                kb_embed.init();
+                keyboard.init();
+            }
+
+            noLoopAll();
+            kb_embed.resetTimedClick();
             kb_embed.loop();
 
             kb_embed.setLocation(0, 0);
@@ -85,8 +93,12 @@ public class MainViewController extends JFrame {
 
     public static void showContacts(){
         if(!curr_embed.equals("contacts")) {
-            cont_embed = new ContactsView();
-            cont_embed.init();
+            if (cont_embed == null) {
+                cont_embed = new ContactsView();
+                cont_embed.init();
+            }
+            noLoopAll();
+            cont_embed.resetTimedClick();
             cont_embed.loop();
             cont_embed.setLocation(0, 0);
             main_pane.add(cont_embed, 1, 0);
@@ -100,6 +112,8 @@ public class MainViewController extends JFrame {
         if(!curr_embed.equals("profile")){
             prof_embed = new ProfileView(img, name, uid);
             prof_embed.init();
+            noLoopAll();
+            prof_embed.resetTimedClick();
             prof_embed.loop();
             System.out.println("Profile name: " + name);
             prof_embed.setLocation(0, 0);
@@ -111,12 +125,31 @@ public class MainViewController extends JFrame {
     }
 
     public static void showMail(){
-        if(!curr_embed.equals("mail")) {
+        return;
+        /*if(!curr_embed.equals("mail")) {
             prev_embed = curr_embed;
             curr_embed = "mail";
         }
 
-        main_frame.setVisible(true);
+        main_frame.setVisible(true);*/
+    }
+
+    public static void noLoopAll() {
+        if (home_embed != null) {
+            home_embed.noLoop();
+        }
+
+        if (prof_embed != null) {
+            prof_embed.noLoop();
+        }
+
+        if (kb_embed != null) {
+            kb_embed.noLoop();
+        }
+
+        if (cont_embed != null) {
+            cont_embed.noLoop();
+        }
     }
 
     public static void removeTopEmbed(String top_embed){
@@ -138,6 +171,8 @@ public class MainViewController extends JFrame {
                 System.out.println("Error: no view to remove");
                 return;
             }
+
+            home_embed.resetTimedClick();
             curr_embed = "none";
         }
     }
@@ -166,6 +201,8 @@ public class MainViewController extends JFrame {
         if (curr_embed == null) {
           return;
         }
+
+        System.out.print("Clicking for " + curr_embed + "\n");
 
         if (curr_embed.equals("home")) {
             home_embed.mousePressed();
