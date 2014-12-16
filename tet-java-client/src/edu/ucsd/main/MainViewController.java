@@ -1,5 +1,6 @@
 package edu.ucsd.main;
 
+import com.theeyetribe.client.GazeManager;
 import edu.ucsd.bolognese.src.HomePage;
 import edu.ucsd.bolognese.src.ProfileView;
 import edu.ucsd.bolognese.src.TemplatePrefs;
@@ -22,6 +23,9 @@ public class MainViewController extends JFrame {
     static JLayeredPane main_pane;
     static JFrame main_frame;
 
+    private static final GazeManager gm = GazeManager.getInstance();
+
+
     // general flow of PApplet: new() -> pane.add(...) -> init() -> noLoop()
     public MainViewController() {
         super("Embedded PApplet");
@@ -30,6 +34,21 @@ public class MainViewController extends JFrame {
 
         main_frame = this;
         main_pane = new JLayeredPane();
+
+        boolean success = gm.activate(GazeManager.ApiVersion.VERSION_1_0, GazeManager.ClientMode.PUSH);
+
+        if (!success) {
+            System.err.println("Error: GazeManager failed to activate");
+        }
+
+        Runtime.getRuntime().addShutdownHook(new Thread()
+        {
+            @Override
+            public void run()
+            {
+                gm.deactivate();
+            }
+        });
 
         showHome();
 
@@ -44,6 +63,7 @@ public class MainViewController extends JFrame {
         home_embed.loop();
         home_embed.setLocation(0, 0);
         main_pane.add(home_embed, 0);
+        gm.addGazeListener(home_embed);
 
         main_frame.setVisible(true);
     }
@@ -65,6 +85,9 @@ public class MainViewController extends JFrame {
         main_pane.add(kb_embed, 0);
         main_pane.add(keyboard, 0);
 
+        gm.addGazeListener(kb_embed);
+        gm.addGazeListener(keyboard);
+
         main_frame.setVisible(true);
     }
 
@@ -78,6 +101,8 @@ public class MainViewController extends JFrame {
 
         pauseTopEmbed();
         main_pane.add(cont_embed, 0);
+
+        gm.addGazeListener(cont_embed);
 
         main_frame.setVisible(true);
     }
@@ -93,6 +118,8 @@ public class MainViewController extends JFrame {
         pauseTopEmbed();
         main_pane.add(prof_embed, 0);
 
+        gm.addGazeListener(prof_embed);
+
         main_frame.setVisible(true);
     }
 
@@ -100,6 +127,7 @@ public class MainViewController extends JFrame {
         int numComponents = main_pane.getComponentCount();
         if (numComponents > 0) {
             LoopApplet loopApplet = (LoopApplet) main_pane.getComponent(0);
+            gm.removeGazeListener(loopApplet);
             loopApplet.resetTimedClick();
             loopApplet.noLoop();
         }
@@ -112,12 +140,14 @@ public class MainViewController extends JFrame {
         }
 
         LoopApplet loopApplet = (LoopApplet) main_pane.getComponent(0);
+        gm.removeGazeListener(loopApplet);
         loopApplet.noLoop();
         main_pane.remove(0);
 
         // Check if there are still any left after removing
         if (numComponents - 2 >= 0 ) {
             loopApplet = (LoopApplet) main_pane.getComponent(0);
+            gm.addGazeListener(loopApplet);
             loopApplet.resetTimedClick();
             loopApplet.loop();
         }

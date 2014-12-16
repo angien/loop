@@ -21,10 +21,10 @@ public class TypingView extends LoopApplet {
     static final int WINDOWWIDTH  = (int)width; //1366;
     static final int WINDOWHEIGHT = (int)height; //768;
     static final int IMGPOS       = 40;
-    static final int BACKWIDTH    = 150;
-    static final int BACKHEIGHT   = 70;
+    static final int BACKWIDTH    = 180;
+    static final int BACKHEIGHT   = 120;
     static final int ZERO         = 0;
-    static final int BACKSIZE     = 65;
+    static final int BACKSIZE     = 100;
     static final int BACKY        = WINDOWHEIGHT*4/5;
 
     KeyboardView keyboard;

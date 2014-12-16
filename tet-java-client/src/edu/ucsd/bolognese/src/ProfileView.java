@@ -9,8 +9,7 @@ import processing.core.*;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.*;
 
 public class ProfileView extends LoopApplet {
     static final int WINDOWWIDTH  = TemplatePrefs.WINDOWWIDTH;
@@ -38,7 +37,12 @@ public class ProfileView extends LoopApplet {
     PImage profPic;
     String profName;
     int profID;
+    int j;
     String[] commonMessages = {"","",""};
+
+    String[] testMessage = {"hi", "Thanks for coming!", "Tell them I said hi!"};
+
+    NavigableMap<Integer, Integer> messageMap = new TreeMap<Integer, Integer>();
 
     public ProfileView(PImage img, String name, int uid){
         profPic = img;
@@ -91,14 +95,13 @@ public class ProfileView extends LoopApplet {
         backColor = TemplatePrefs.DEFAULT_BACK_COLOR;
 
         if (overWrite(WRITEX, ZERO, RECTWIDTH, RECTHEIGHT)) writeColor = highlight;
-        if (overAdd(ADDX, ZERO, RECTWIDTH, RECTHEIGHT)) addColor = highlight;
-        if (overDelete(DELETEX, ZERO, RECTWIDTH, RECTHEIGHT)) deleteColor = highlight;
         if (overBack(ZERO, BACKY, BACKWIDTH, BACKHEIGHT)) backColor = highlight;
 
         // buttons
         fill(writeColor);
         noStroke();
         rect(WRITEX, ZERO, RECTWIDTH, RECTHEIGHT);
+        
         fill(addColor);
         noStroke();
         rect(ADDX, ZERO, RECTWIDTH, RECTHEIGHT);
@@ -114,8 +117,6 @@ public class ProfileView extends LoopApplet {
 
         image(profPic, IMGPOS, IMGPOS, IMGWIDTH, IMGHEIGHT);
         image(writeImg, 580, ICONY, ICONSIZE, ICONSIZE);
-        image(addImg, 870, ICONY, ICONSIZE, ICONSIZE);
-        image(deleteImg, 1160, ICONY, ICONSIZE, ICONSIZE);
         image(backImg, IMGPOS, BACKY+3, BACKSIZE, BACKSIZE);
 
         textFont(f);
@@ -124,10 +125,27 @@ public class ProfileView extends LoopApplet {
         textAlign(CENTER);
         text(profName, 250, 510);
 
-        text(commonMessages[0], 900,300 );
-        text(commonMessages[1], 900,400 );
-        text(commonMessages[2], 900,500 );
+        /* NOTE: uncomment this to display messages from the database
+         * Done in a super hacky way but should work.
+         */
+//        for ( int i = 0; i < commonMessages.length; i++ ){
+//
+//            j = 300;
+//            text( commonMessages[i], 900 ,j );
+//            messageTracker.put(j, i);
+//            j += 75;
+//
+//        }
 
+
+        text(testMessage[0], 900, 300 );
+        messageMap.put(300-38, 0);
+        text(testMessage[1], 900, 375);
+        messageMap.put(375-38, 1);
+        text(testMessage[2], 900, 450 );
+        messageMap.put(450-38, 2);
+
+        j=450+75;
 
     }
 
@@ -156,6 +174,16 @@ public class ProfileView extends LoopApplet {
                 e.printStackTrace();
             }
         }
+
+        if ( overMessage(700, 1100, 300-38, j) && !messageMap.isEmpty()) {
+            System.out.println("ASDASDASDASDAASD" + mouseY);
+            if (messageMap.containsKey(messageMap.floorKey(mouseY))){
+                FreeTTS freeTTS = new FreeTTS(testMessage[messageMap.get(messageMap.floorKey(mouseY))]);
+                freeTTS.speak();
+            }
+
+
+        }
     }
 
     /**
@@ -167,27 +195,20 @@ public class ProfileView extends LoopApplet {
     }
 
     /**
-     * Set to true if hovering over add button
-     */
-    public boolean overAdd(int x, int y, int width, int height) {
-        return mouseX >= x && mouseX <= x + width &&
-                mouseY >= y && mouseY <= y + height;
-    }
-
-    /**
-     * Set to true if hovering over delete button
-     */
-    public boolean overDelete(int x, int y, int width, int height) {
-        return mouseX >= x && mouseX <= x + width &&
-                mouseY >= y && mouseY <= y + height;
-    }
-
-    /**
      * Set to true if hovering over back button
      */
     public boolean overBack(int x, int y, int width, int height) {
         return mouseX >= x && mouseX <= x + width &&
                 mouseY >= y && mouseY <= y + height;
+    }
+
+    /**
+     * Set to true if hovering over one of the text
+     */
+    public boolean overMessage(int xMin, int xMax, int yMin, int yMax) {
+        return mouseX >= xMin && mouseX <= xMax &&
+                mouseY >= yMin && mouseY <= yMax;
+
     }
 
 }
