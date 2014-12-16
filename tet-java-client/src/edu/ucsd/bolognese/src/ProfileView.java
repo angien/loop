@@ -101,7 +101,7 @@ public class ProfileView extends LoopApplet {
         fill(writeColor);
         noStroke();
         rect(WRITEX, ZERO, RECTWIDTH, RECTHEIGHT);
-        
+
         fill(addColor);
         noStroke();
         rect(ADDX, ZERO, RECTWIDTH, RECTHEIGHT);

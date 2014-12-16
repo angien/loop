@@ -111,8 +111,7 @@ public class
         PImage back_icon_img = loadImage("back.png");
         image(back_icon_img, back_btn_start_x + 10, back_btn_start_y, (int)(back_btn_width * 0.25), back_btn_height);
 
-        fill(TemplatePrefs.DEFAULT_WRITE_COLOR);
-        //textFont(createFont("Arial", 40, true));
+        fill(255, 255, 255); //fill(TemplatePrefs.DEFAULT_WRITE_COLOR);
         text("Back", back_btn_start_x + 100, back_btn_start_y + 50);
 
         showImages(1);
@@ -162,7 +161,8 @@ public class
                 text(name, right_col_x + margin_width, TemplatePrefs.WINDOWHEIGHT - margin_y * 2);
                 break;
             default:
-                System.out.println("Error: Black Magic Detected");
+                System.out.println("Error: Array.IndexOutOfBoundException not caught by Java...");
+                break;
         }
     }
 
@@ -210,7 +210,6 @@ public class
     }
 
     public void mousePressed(){
-        System.out.println("clicked on: {" + Integer.toString(mouseX) + ", " + Integer.toString(mouseY) + "}");
         if(backPressed(mouseX, mouseY)){
             exit_pressed = true;
             MainViewController.removeTopEmbed();
@@ -221,8 +220,6 @@ public class
                 if(prof_images.get(prof_index) != null && prof_names.get(prof_index) != null){
                     MainViewController.showProfile(prof_images.get(prof_index), prof_names.get(prof_index), prof_index);
                 }
-            } else{
-                System.out.println("clicked neither the profile nor the back button");
             }
         }
     }
