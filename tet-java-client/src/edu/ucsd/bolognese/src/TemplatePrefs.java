@@ -12,7 +12,7 @@ public class TemplatePrefs {
   public static final int LIGHTGREEN = new Color(116, 205, 178).getRGB();
   public static final int LIME = new Color(121, 189, 154).getRGB();
   public static final int DEFAULT_BACK_COLOR = new Color(115, 99, 87).getRGB();
-  public static final int DEFAULT_BUTTON_SELECTED = new Color(35, 243, 255).getRGB();
+  public static final int DEFAULT_BUTTON_SELECTED = new Color(229, 255, 151).getRGB();
 
   // dynamic window size
   static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
